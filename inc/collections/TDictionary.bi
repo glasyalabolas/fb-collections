@@ -28,6 +28,8 @@
       declare property size() as integer override
       declare property count() as integer override
       
+      declare operator []( as TKey ) as TType ptr
+      
       declare function containsKey( as TKey ) as boolean
       declare sub getKeys( a() as TKey )
       declare function add( as TKey, as TType ptr ) _
@@ -110,6 +112,10 @@
   property Dictionary( of( TKey ), of( TType ) ).size() as integer
     return( _size )
   end property
+  
+  operator Dictionary( of( TKey ), of( TType ) ).[]( k as TKey ) as TType ptr
+    return( find( k ) )
+  end operator
   
   '' Disposes all the elements of the internal hash table
   sub Dictionary( of( TKey ), of( TType ) ).dispose( _
