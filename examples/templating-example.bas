@@ -13,7 +13,7 @@ template( Dictionary, of( string ), of( List( of( string ) ) ) )
 sub show( l as List( of( string ) ) ptr )
   if( l <> 0 ) then
     for i as integer = 0 to l->count - 1
-      ? *l->at( i )
+      ? ( *l )[ i ]
     next
   else
     ? "Not found!"

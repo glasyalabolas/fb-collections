@@ -14,10 +14,6 @@ sub show overload( d as Dictionary( of( integer ), of( Person ) ) )
   d.forEach( ShowPerson() )
 end sub
 
-sub show( l as List( of( Person ) ) )
-  l.forEach( ShowPerson() )
-end sub
-
 scope
   var _
     aDictionary = Dictionary( of( integer ), of( Person ) )(), _

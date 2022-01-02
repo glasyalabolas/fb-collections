@@ -21,7 +21,7 @@ function selectFrom( _
   
   for i as integer = 0 to aList.count - 1
     if( aPredicate( aList.at( i ), anAge ) ) then
-      selected->add( *aList.at( i ) )
+      selected->add( aList[ i ] )
     end if
   next
   
@@ -43,15 +43,14 @@ scope
     ? "Persons whose age is under 28 years: "
     
     for i as integer = 0 to selected->count - 1
-      ? selected->at( i )->name & ", " & _
-        selected->at( i )->age
+      ? ( *selected )[ i ]
     next
   end scope
   
   ?
   ? "All people: "
   for i as integer = 0 to aList.count - 1
-    ? aList.at( i )->name & ", " & aList.at( i )->age
+    ? aList[ i ]
   next
   
   ?

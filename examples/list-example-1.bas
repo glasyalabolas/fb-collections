@@ -40,7 +40,6 @@ end sub
   Derive a Command that 'engages' a clutch
 '/
 type EngageClutch extends ICommand
-  
   declare constructor()
   declare destructor() override
   

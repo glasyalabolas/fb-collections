@@ -53,8 +53,9 @@ scope
   
   ? ( *aList.at( 0 ) )->foo
   
-  '' Or arternatively:
-  '? **aList.at( 0 ).foo
+  '' Or alternatively:
+  '' ? *( aList[ 0 ] ).foo
+  '' ? **aList.at( 0 ).foo
 end scope
 
 ? "Finished."
