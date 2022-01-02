@@ -76,7 +76,7 @@
     _count = 0
     _lowerBound = 0
     
-    _elements = allocate( _size * sizeOf( TType ) )
+    _elements = allocate( _size * sizeof( TType ) )
   end constructor
   
   constructor Stack( of( TType ) )( rhs as Stack( of( TType ) ) )
@@ -90,8 +90,8 @@
       _fixedSize = ._fixedSize
     end with
     
-    _elements = allocate( _size * sizeOf( TType ) )
-    memcpy( _elements, rhs._elements, _size * sizeOf( TType ) )
+    _elements = allocate( _size * sizeof( TType ) )
+    memcpy( _elements, rhs._elements, _size * sizeof( TType ) )
   end constructor
   
   destructor Stack( of( TType ) )()
@@ -109,8 +109,8 @@
       _fixedSize = ._fixedSize
     end with
     
-    _elements = allocate( _size * sizeOf( TType ) )
-    memcpy( _elements, rhs._elements, _size * sizeOf( TType ) )
+    _elements = allocate( _size * sizeof( TType ) )
+    memcpy( _elements, rhs._elements, _size * sizeof( TType ) )
   end operator
   
   property Stack( of( TType ) ).count() as integer
@@ -141,7 +141,7 @@
     _count = 0
     _lowerBound = 0
     
-    _elements = reallocate( _elements, _size * sizeOf( TType ) )
+    _elements = reallocate( _elements, _size * sizeof( TType ) )
     
     return( this )
   end function
@@ -150,14 +150,14 @@
     _count += 1
     
     if( not _fixedSize ) then
+      '' Resize the internal array if necessary
       if( _count > ( _size - _initialSize shr 1 ) ) then
-        '' Resize the internal array if necessary
         resize( _size + _initialSize )
       end if
     end if
     
+    '' And add the element to the end of the stack
     if( _count <= _size ) then
-      '' And add the element to the end of the stack
       _elements[ _count - 1 ] = item
       return( true )
     end if
