@@ -81,8 +81,9 @@ scope
     .enqueue( 7, new Person( "Person 2", 7 ) ) _
     .enqueue( p1->age, p1 ) _
     .enqueue( p2->age, p2 ) _
-    .enqueue( p3->age, p3 )
-    
+    .enqueue( p3->age, p3 ) _
+    .forEach( SetAgeTo( -4 ) )
+  
   for items as integer = 0 to aQueue.count - 1
     var item = aQueue.dequeue()
     

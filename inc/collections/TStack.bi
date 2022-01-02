@@ -194,11 +194,11 @@
   end function
   
   function Stack( of( TType ) ).forEach( _
-      anActionFunc as ActionFunc( of( TType ) ), anActionParam as any ptr = 0 ) _
+      anAction as ActionFunc( of( TType ) ), anActionParam as any ptr = 0 ) _
     byref as Stack( of( TType ) )
     
     for i as integer = 0 to _count - 1
-      anActionFunc( i, @_elements[ i ], anActionParam )
+      anAction( i, @_elements[ i ], anActionParam )
     next
     
     return( this )
@@ -221,15 +221,13 @@
   end function
   
   function Stack( of( TType ) ).forEach( _
-      aPredicateFunc as PredicateFunc( of( TType ) ), anActionFunc as ActionFunc( of( TType ) ), _
+      aPredicate as PredicateFunc( of( TType ) ), anAction as ActionFunc( of( TType ) ), _
       aPredicateParam as any ptr = 0, anActionParam as any ptr = 0 ) _
     byref as Stack( of( TType ) )
     
     for i as integer = 0 to _count - 1
-      if( aPredicateFunc( _
-        i, @_elements[ i ], aPredicateParam ) ) then
-        
-        anActionFunc( i, @_elements[ i ], anActionParam )
+      if( aPredicate( i, @_elements[ i ], aPredicateParam ) ) then
+        anAction( i, @_elements[ i ], anActionParam )
       end if
     next
     

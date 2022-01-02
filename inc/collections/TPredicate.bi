@@ -13,6 +13,7 @@
     
     declare abstract function eval( as TType ptr ) as boolean
     
+    '' Set by the 'forEach' methods
     as integer indexOf
   end type
   

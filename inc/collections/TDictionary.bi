@@ -51,7 +51,12 @@
         
       declare function forEach( as Action( of( TType ) ) ) _
         byref as Dictionary( of( TKey ), of( TType ) ) override
+      declare function forEach( as ActionFunc( of( TType ) ), as any ptr = 0 ) _
+        byref as Dictionary( of( TKey ), of( TType ) ) override
       declare function forEach( as Predicate( of( TType ) ), as Action( of( TType ) ) ) _
+        byref as Dictionary( of( TKey ), of( TType ) ) override
+      declare function forEach( _
+          as PredicateFunc( of( TType ) ), as ActionFunc( of( TType ) ), as any ptr = 0, as any ptr = 0 ) _
         byref as Dictionary( of( TKey ), of( TType ) ) override
       
     protected:
@@ -420,6 +425,27 @@
         
         for j as integer = 0 to _hashTable[ i ]->count - 1
           anAction.invoke( n->item->_value )
+          
+          n = n->forward
+        next
+      end if
+    next
+    
+    return( this )
+  end function
+  
+  function Dictionary( of( TKey ), of( TType ) ).forEach( _
+      anAction as ActionFunc( of( TType ) ), param as any ptr = 0 ) _
+    byref as Dictionary( of( TKey ), of( TType ) )
+    
+    for i as integer = 0 to _size - 1
+      if( _hashTable[ i ] <> 0 ) then
+        var n = _hashTable[ i ]->first
+        
+        for j as integer = 0 to _hashTable[ i ]->count - 1
+          anAction( i, n->item->_value, param )
+          
+          n = n->forward
         next
       end if
     next
@@ -439,6 +465,30 @@
           if( aPredicate.eval( n->item->_value ) ) then
             anAction.invoke( n->item->_value )
           end if
+          
+          n = n->forward
+        next
+      end if
+    next
+    
+    return( this )
+  end function
+  
+  function Dictionary( of( TKey ), of( TType ) ).forEach( _
+      aPredicate as PredicateFunc( of( TType ) ), anAction as ActionFunc( of( TType ) ), _
+      aPredicateParam as any ptr = 0, anActionParam as any ptr = 0 ) _
+    byref as Dictionary( of( TKey ), of( TType ) )
+    
+    for i as integer = 0 to _size - 1
+      if( _hashTable[ i ] <> 0 ) then
+        var n = _hashTable[ i ]->first
+        
+        for j as integer = 0 to _hashTable[ i ]->count - 1
+          if( aPredicate( i, n->item->_value, aPredicateParam ) ) then
+            anAction( i, n->item->_value, anActionParam )
+          end if
+          
+          n = n->forward
         next
       end if
     next

@@ -113,8 +113,13 @@
       declare function dequeue() as TType ptr
       declare function forEach( as Action( of( TType ) ) ) _
         byref as PriorityQueue( of( TType ) ) override
+      declare function forEach( as ActionFunc( of( TType ) ), as any ptr = 0 ) _
+        byref as PriorityQueue( of( TType ) ) override
       declare function forEach( _
           as Predicate( of( TType ) ), as Action( of( TType ) ) ) _
+        byref as PriorityQueue( of( TType ) ) override
+      declare function forEach( _
+          as PredicateFunc( of( TType ) ), as ActionFunc( of( TType ) ), as any ptr = 0, as any ptr = 0 ) _
         byref as PriorityQueue( of( TType ) ) override
       
     private:
@@ -455,6 +460,31 @@
     
     for i as integer = 1 to _count
       anAction.invoke( _elements( i )->value )
+    next
+    
+    return( this )
+  end function
+  
+  function PriorityQueue( of( TType ) ).forEach( _
+      anAction as ActionFunc( of( TType ) ), param as any ptr = 0 ) _
+    byref as PriorityQueue( of( TType ) )
+    
+    for i as integer = 1 to _count
+      anAction( i, _elements( i )->value, param )
+    next
+    
+    return( this )
+  end function
+  
+  function PriorityQueue( of( TType ) ).forEach( _
+      aPredicate as PredicateFunc( of( TType ) ), anAction as ActionFunc( of( TType ) ), _
+      aPredicateParam as any ptr = 0, anActionParam as any ptr = 0 ) _
+    byref as PriorityQueue( of( TType ) )
+    
+    for i as integer = 1 to _count
+      if( aPredicate( i, _elements( i )->value, aPredicateParam ) ) then
+        anAction( i, _elements( i )->value, anActionParam )
+      end if
     next
     
     return( this )

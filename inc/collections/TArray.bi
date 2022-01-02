@@ -44,8 +44,13 @@
       
       declare function findAll( as Predicate( of( TType ) ) ) as Array( of( TType ) )
       declare function forEach( as Action( of( TType ) ) ) byref as Array( of( TType ) ) override
+      declare function forEach( as ActionFunc( of( TType ) ), as any ptr = 0 ) _
+        byref as Array( of( TType ) ) override
       declare function forEach( _
           as Predicate( of( TType ) ), as Action( of( TType ) ) ) _
+        byref as Array( of( TType ) ) override
+      declare function forEach( _
+          as PredicateFunc( of( TType ) ), as ActionFunc( of( TType ) ), as any ptr = 0, as any ptr = 0 ) _
         byref as Array( of( TType ) ) override
       
     protected:
@@ -245,6 +250,16 @@
     return( this )
   end function
   
+  function Array( of( TType ) ).forEach( anAction as ActionFunc( of( TType ) ), param as any ptr = 0 ) _
+    byref as Array( of( TType ) )
+    
+    for i as integer = 0 to _count - 1
+      anAction( i, @_array( i ), param )
+    next
+    
+    return( this )
+  end function
+  
   '' Invokes the specified action on each of the elements of the array if
   '' they satisfy the specified predicate.
   function Array( of( TType ) ).forEach( _
@@ -252,8 +267,25 @@
     byref as Array( of( TType ) )
     
     for i as integer = 0 to _count - 1
+      aPredicate.indexOf = i
+      
       if( aPredicate.eval( @_array( i ) ) ) then
+        anAction.indexOf = i
         anAction.invoke( @_array( i ) )
+      end if
+    next
+    
+    return( this )
+  end function
+  
+  function Array( of( TType ) ).forEach( _
+      aPredicate as PredicateFunc( of( TType ) ), anAction as ActionFunc( of( TType ) ), _
+      aPredicateParam as any ptr = 0, anActionParam as any ptr = 0 ) _
+    byref as Array( of( TType ) )
+    
+    for i as integer = 0 to _count - 1
+      if( aPredicate( i, @_array( i ), aPredicateParam ) ) then
+        anAction( i, @_array( i ), anActionParam )
       end if
     next
     

@@ -440,11 +440,11 @@
   end function
   
   function List( of( TType ) ).forEach( _
-      anActionFunc as ActionFunc( of( TType ) ), anActionParam as any ptr = 0 ) _
+      anAction as ActionFunc( of( TType ) ), anActionParam as any ptr = 0 ) _
     byref as List( of( TType ) )
     
     for i as integer = 0 to _count - 1
-      anActionFunc( i, _elements( i )->_item, anActionParam )
+      anAction( i, _elements( i )->_item, anActionParam )
     next
     
     return( this )
@@ -467,15 +467,13 @@
   end function
   
   function List( of( TType ) ).forEach( _
-      aPredicateFunc as PredicateFunc( of( TType ) ), anActionFunc as ActionFunc( of( TType ) ), _
+      aPredicate as PredicateFunc( of( TType ) ), anAction as ActionFunc( of( TType ) ), _
       aPredicateParam as any ptr = 0, anActionParam as any ptr = 0 ) _
     byref as List( of( TType ) )
     
     for i as integer = 0 to _count - 1
-      if( aPredicateFunc( _
-        i, _elements( i )->_item, aPredicateParam ) ) then
-        
-        anActionFunc( i, _elements( i )->_item, anActionParam )
+      if( aPredicate( i, _elements( i )->_item, aPredicateParam ) ) then
+        anAction( i, _elements( i )->_item, anActionParam )
       end if
     next
     

@@ -76,7 +76,7 @@
   end function
   
   function Collection( of( TCollection ), of( TType ) ).forEach( _
-      aPredicate as PredicateFunc( of( TType ) ), anActionFunc as ActionFunc( of( TType ) ), _
+      aPredicate as PredicateFunc( of( TType ) ), anAction as ActionFunc( of( TType ) ), _
       aPredicateParam as any ptr = 0, anActionParam as any ptr = 0 ) _
     byref as Collection( of( TCollection ), of( TType ) ) export
     
