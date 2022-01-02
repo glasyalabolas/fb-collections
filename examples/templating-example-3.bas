@@ -1,4 +1,4 @@
-#include once "fbfw/collections.bi"
+#include once "../inc/collections.bi"
 
 /'
   Example showing how templating works with namespaces
