@@ -17,9 +17,7 @@
   template_collection( ofKey( Dictionary, of( TKey ) ), __tcar__( TType ) )
   
   '' Represents a strongly-typed dictionary of key-value pairs
-  type Dictionary( of( TKey ), of( TType ) ) _
-    extends Collection( ofKey( Dictionary, of( TKey ) ), __tcar__( TType ) )
-    
+  type Dictionary( of( TKey ), of( TType ) ) extends Collection( of( TType ) )
     public:
       declare constructor()
       declare constructor( as integer )

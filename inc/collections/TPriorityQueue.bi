@@ -93,7 +93,7 @@
   #endif
   
   '' Represents a strongly-typed priority queue (aka binary heap) 
-  type PriorityQueue( of( TType ) ) extends Collection( of( TCollection ), of( TType ) )
+  type PriorityQueue( of( TType ) ) extends Collection( of( TType ) )
     public:
       declare constructor()
       declare constructor( as integer )

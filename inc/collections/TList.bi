@@ -73,7 +73,7 @@
     So, the list grows or shrinks by an amount of elements equal to the 
     initial size given (also called the 'capacity').
   '/
-  type List( of( TType ) ) extends Collection( of( TCollection ), of( TType ) )
+  type List( of( TType ) ) extends Collection( of( TType ) )
     public:
       declare constructor()
       declare constructor( as integer )

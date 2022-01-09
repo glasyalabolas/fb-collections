@@ -66,7 +66,7 @@
     traversal. Thus, it can be used both as a queue/heap or as a stack, by 
     using the appropriate methods to add/remove elements from it.
   '/
-  type LinkedList( of( TType ) ) extends Collection( of( TCollection ), of( TType ) )
+  type LinkedList( of( TType ) ) extends Collection( of( TType ) )
     public:
       declare constructor()
       declare virtual destructor() override

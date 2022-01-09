@@ -22,9 +22,7 @@
       - Implement multi-dimensional Arrays by using a variadic macro.
         I'm not too sure of the usefulness of this, though.
   '/
-  type Array( of( TType ) ) _
-    extends Collection( of( TCollection ), of( TType ) )
-    
+  type Array( of( TType ) ) extends Collection( of( TType ) )
     public:
       declare constructor()
       declare constructor( as integer )
