@@ -11,7 +11,7 @@
   type KeyValuePair( of( TKey ), of( TType ) )
     public:
       declare constructor()
-      declare constructor( as Key( of( TKey ) ), as const TType )
+      declare constructor( as Key( of( TKey ) ), byref as const TType )
       declare constructor( as Key( of( TKey ) ), as TType ptr )
       declare constructor( as KeyValuePair( of( TKey ), of( TType ) ) )
       declare destructor()
@@ -34,7 +34,7 @@
     _needsDisposing = true
   end constructor
   
-  constructor KeyValuePair( of( TKey ), of( TType ) )( aKey as Key( of( TKey ) ), aValue as const TType )
+  constructor KeyValuePair( of( TKey ), of( TType ) )( aKey as Key( of( TKey ) ), byref aValue as const TType )
     _key = aKey
     _value = cptr( TType ptr, @aValue )
     _needsDisposing = false
