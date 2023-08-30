@@ -30,14 +30,9 @@
       
       declare function containsKey( as TKey ) as boolean
       declare sub getKeys( a() as TKey )
-      declare function add( as TKey, as TType ptr ) _
-        byref as Dictionary( of TKey, of TType )
-      'declare function add( as TKey, as TType ptr, byref as TType ) _
-      '  byref as Dictionary( of TKey, of TType )
-      declare function add( as TKey, byref as TType ) _
-        byref as Dictionary( of TKey, of TType )
-      declare function remove( as TKey ) _
-        byref as Dictionary( of TKey, of TType )
+      declare function add( as TKey, as TType ptr ) byref as Dictionary( of TKey, of TType )
+      declare function add( as TKey, byref as TType ) byref as Dictionary( of TKey, of TType )
+      declare function remove( as TKey ) byref as Dictionary( of TKey, of TType )
       declare function removeItem( as TKey ) as TType ptr
       declare function clear() byref as Dictionary( of TKey, of TType ) override
       declare function find( as TKey ) as TType ptr
@@ -93,11 +88,9 @@
     setResizeThresholds( _initialSize, 0.55, 0.85 )
   end constructor
   
-  constructor Dictionary( of TKey, of TType )( rhs as Dictionary( of TKey, of TType ) )
-  end constructor
+  constructor Dictionary( of TKey, of TType )( rhs as Dictionary( of TKey, of TType ) ) : end constructor
   
-  operator Dictionary( of TKey, of TType ).let( rhs as Dictionary( of TKey, of TType ) )
-  end operator
+  operator Dictionary( of TKey, of TType ).let( rhs as Dictionary( of TKey, of TType ) ) : end operator
   
   destructor Dictionary( of TKey, of TType )()
     dispose( _size, _hashTable )
@@ -307,19 +300,6 @@
     
     return( this )
   end function
-  
-  'function Dictionary( of TKey, of TType ).add( _
-  '    aKey as TKey, aValue as TType ptr, byref anInitialValue as TType ) _
-  '  byref as Dictionary( of TKey, of TType )
-  '  
-  '  addEntry( new KeyValuePair( of TKey, of TType )( aKey, aValue ), _hashTable, _size )
-  '  
-  '  if( _count > _maxThreshold ) then
-  '    rehash( _size shl 1  )
-  '  end if
-  '  
-  '  return( this )
-  'end function
   
   '' Removes a key-value pair from the internal hash table
   function Dictionary( of TKey, of TType ).removeEntry( aKey as TKey ) _
