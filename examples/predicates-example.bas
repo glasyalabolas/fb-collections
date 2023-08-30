@@ -1,15 +1,13 @@
 #include once "../inc/collections.bi"
 #include once "../common/person.bi"
 
-template( List, of( Person ) )
+template( List, of Person )
 
 #include once "../common/person-predicates.bi"
 
-/'
-  Example usage of predicates to select elements from collections
-'/
+'' Example usage of predicates to select elements from collections
 scope
-  var aList = List( of( Person ) )
+  var aList = List( of Person )
   
   with aList
     .add( new Person( "John", 34 ) )

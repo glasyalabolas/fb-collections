@@ -1,23 +1,21 @@
 #include once "../inc/collections.bi"
 #include once "../common/person.bi"
 
-/'
-  Basic example of usage for Dictionaries
-'/ 
-template( Dictionary, of( integer ), of( Person ) )
-template( List, of( Person ) )
+'' Basic example of usage for Dictionaries
+template( Dictionary, of integer, of Person )
+template( List, of Person )
 
 #include once "../common/person-predicates.bi"
 #include once "../common/person-actions.bi"
 
-sub show overload( d as Dictionary( of( integer ), of( Person ) ) )
+sub show overload( d as Dictionary( of integer, of Person ) )
   d.forEach( ShowPerson() )
 end sub
 
 scope
   var _
-    aDictionary = Dictionary( of( integer ), of( Person ) )(), _
-    aList = List( of( Person ) )()
+    aDictionary = Dictionary( of integer, of Person )(), _
+    aList = List( of Person )()
   
   for items as integer = 1 to 10
     var aPerson = new Person( "Person" & items, items )

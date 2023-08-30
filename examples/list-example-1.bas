@@ -54,13 +54,13 @@ sub EngageClutch.execute()
   ? "Engaging clutch"
 end sub
 
-template( List, of( ICommand ) )
+template( List, of ICommand )
 
 /'
   Note that the derived Action does indeed work transparently with
   interfaces too.
 '/
-type Execute extends Action( of( ICommand ) )
+type Execute extends Action( of ICommand )
   declare constructor()
   declare destructor() override
   
@@ -81,7 +81,7 @@ end sub
   execute each one in turn using the forEach() method of the List.
 '/
 scope
-  var commands = List( of( ICommand ) )()
+  var commands = List( of ICommand )()
   
   commands.add( new ActivateSensor() ).add( new EngageClutch() ).forEach( Execute() )
 end scope

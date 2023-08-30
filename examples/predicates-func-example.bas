@@ -9,15 +9,15 @@ function personsBelowAge( aPerson as Person ptr, anAge as integer ) as boolean
   return( cbool( aPerson->age < anAge ) )
 end function
 
-template( List, of( Person ) )
+template( List, of Person )
 
 function selectFrom( _
-    aList as List( of( Person ) ), _
+    aList as List( of Person ), _
     aPredicate as function( as Person ptr, as integer ) as boolean, _
     anAge as integer ) _
-  as auto_ptr( of( List( of( Person ) ) ) )
+  as auto_ptr( of List( of Person ) )
   
-  var selected = new List( of( Person ) )
+  var selected = new List( of Person )
   
   for i as integer = 0 to aList.count - 1
     if( aPredicate( aList.at( i ), anAge ) ) then
@@ -25,11 +25,11 @@ function selectFrom( _
     end if
   next
   
-  return( auto_ptr( of( List( of( Person ) ) ) )( selected ) )
+  return( auto_ptr( of List( of Person ) )( selected ) )
 end function
 
 scope
-  var aList = List( of( Person ) )
+  var aList = List( of Person )
   
   with aList
     .add( new Person( "John", 34 ) )

@@ -1,7 +1,7 @@
 #include once "../inc/collections.bi"
 #include once "../common/person.bi"
 
-template( PriorityQueue, of( Person ) )
+template( PriorityQueue, of Person )
 
 #include once "../common/person-predicates.bi"
 #include once "../common/person-actions.bi"
@@ -17,7 +17,7 @@ template( PriorityQueue, of( Person ) )
 ? "** Wrong usage **"
 
 scope
-  var aQueue = PriorityQueue( of( Person ) )( Collections.PriorityOrder.Ascending )
+  var aQueue = PriorityQueue( of Person )( Collections.PriorityOrder.Ascending )
   
   '' Note that these will be added by reference to the queue
   var _
@@ -69,7 +69,7 @@ end scope
 ? "** Correct usage **"
 
 scope
-  var aQueue = PriorityQueue( of( Person ) )( Collections.PriorityOrder.Descending )
+  var aQueue = PriorityQueue( of Person )( Collections.PriorityOrder.Descending )
   
   var _
     p1 = new Person( "Paul Doe", 37 ), _

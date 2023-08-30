@@ -34,7 +34,7 @@ operator Something.cast() as string
   return( "Something.foo is: " & foo )
 end operator
 
-template( List, of( Something_ptr ) )
+template( List, of Something_ptr )
 
 sub dispose( item as Something_ptr ptr )
   delete( *item )
@@ -46,7 +46,7 @@ end sub
 '/
 scope
   var _
-    aList = List( of( Something_ptr ) )( @dispose ), _
+    aList = List( of Something_ptr )( @dispose ), _
     aSomething = new Something( 4 )
   
   aList.add( @aSomething )

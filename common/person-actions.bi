@@ -1,7 +1,7 @@
 /'
   Some actions to test
 '/
-type SetAgeTo extends Action( of( Person ) )
+type SetAgeTo extends Action( of Person )
   public:
     declare constructor( as integer )
     declare destructor() override
@@ -26,7 +26,7 @@ sub SetAgeTo.invoke( aPerson as Person ptr )
   aPerson->age = _age
 end sub
 
-type ShowPerson extends Action( of( Person ) )
+type ShowPerson extends Action( of Person )
   declare constructor()
   declare destructor() override
   

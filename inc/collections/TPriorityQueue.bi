@@ -8,7 +8,7 @@
   template_predicate( __tcar__( TType ) )
   template_action( __tcar__( TType ) )
   template_collection( TCollection, __tcar__( TType ) )
-  declare_auto_ptr( of( PriorityQueue( __tcar__( TType ) ) ) )
+  declare_auto_ptr( of PriorityQueue( __tcar__( TType ) ) )
   
   /'
     Represents an element of the priority queue.
@@ -18,7 +18,7 @@
   '/
   #ifndef __T__##QueueElement##__##TType##__ 
   
-  type QueueElement( of( TType ) )
+  type QueueElement( of TType )
     public:
       declare constructor( as integer, as TType ptr, as boolean )
       declare destructor()
@@ -31,8 +31,8 @@
     private:
       declare constructor()
       
-      declare constructor( as QueueElement( of( TType ) ) )
-      declare operator let( as QueueElement( of( TType ) ) )
+      declare constructor( as QueueElement( of TType ) )
+      declare operator let( as QueueElement( of TType ) )
       
       '' The priority of this element
       as integer _priority
@@ -43,38 +43,32 @@
       as boolean _needsDisposing
   end type
   
-  constructor QueueElement( of( TType ) )()
-  end constructor
+  constructor QueueElement( of TType )() : end constructor
   
-  constructor QueueElement( of( TType ) )( _
-    aPriority as integer, aValue as TType ptr, needsDisposing as boolean )
-     
+  constructor QueueElement( of TType )( aPriority as integer, aValue as TType ptr, needsDisposing as boolean )
     _priority = aPriority
     _value = aValue
     _needsDisposing = needsDisposing
   end constructor
   
-  constructor QueueElement( of( TType ) )( rhs as QueueElement( of( TType ) ) )
-  end constructor
+  constructor QueueElement( of TType )( rhs as QueueElement( of TType ) ) : end constructor
+  operator QueueElement( of TType ).let( rhs as QueueElement( of TType ) ) : end operator
   
-  operator QueueElement( of( TType ) ).let( rhs as QueueElement( of( TType ) ) )
-  end operator
-  
-  destructor QueueElement( of( TType ) )()
+  destructor QueueElement( of TType )()
     if( _needsDisposing andAlso _value <> 0 ) then
       delete( _value )
     end if
   end destructor
   
-  property QueueElement( of( TType ) ).priority() as integer
+  property QueueElement( of TType ).priority() as integer
     return( _priority )
   end property
   
-  property QueueElement( of( TType ) ).value() as TType ptr
+  property QueueElement( of TType ).value() as TType ptr
     return( _value )
   end property
   
-  function QueueElement( of( TType ) ).detach() as TType ptr
+  function QueueElement( of TType ).detach() as TType ptr
     var element = _value
     
     _value = 0
@@ -82,18 +76,18 @@
     return( element )
   end function
   
-  operator < ( lhs as QueueElement( of( TType ) ), rhs as QueueElement( of( TType ) ) ) as integer
+  operator < ( lhs as QueueElement( of TType ), rhs as QueueElement( of TType ) ) as integer
     return( lhs.priority < rhs.priority )
   end operator
   
-  operator > ( lhs as QueueElement( of( TType ) ), rhs as QueueElement( of( TType ) ) ) as integer
+  operator > ( lhs as QueueElement( of TType ), rhs as QueueElement( of TType ) ) as integer
     return( lhs.priority > rhs.priority )
   end operator
   
   #endif
   
   '' Represents a strongly-typed priority queue (aka binary heap) 
-  type PriorityQueue( of( TType ) ) extends Collection( of( TType ) )
+  type PriorityQueue( of TType ) extends Collection( of TType )
     public:
       declare constructor()
       declare constructor( as integer )
@@ -105,30 +99,27 @@
       declare property count() as integer override
       declare property top() as TType ptr
       
-      declare function clear() byref as PriorityQueue( of( TType ) ) override
-      declare function enqueue( as integer, as TType ptr ) _
-        byref as PriorityQueue( of( TType ) )
-      declare function enqueue( as integer, byref as const TType ) _
-        byref as PriorityQueue( of( TType ) )
+      declare function clear() byref as PriorityQueue( of TType ) override
+      declare function enqueue( as integer, as TType ptr ) byref as PriorityQueue( of TType )
+      declare function enqueue( as integer, byref as const TType ) byref as PriorityQueue( of TType )
       declare function dequeue() as TType ptr
-      declare function forEach( as Action( of( TType ) ) ) _
-        byref as PriorityQueue( of( TType ) ) override
-      declare function forEach( as ActionFunc( of( TType ) ), as any ptr = 0 ) _
-        byref as PriorityQueue( of( TType ) ) override
+      declare function forEach( as Action( of TType ) ) byref as PriorityQueue( of TType ) override
+      declare function forEach( as ActionFunc( of TType ), as any ptr = 0 ) _
+        byref as PriorityQueue( of TType ) override
       declare function forEach( _
-          as Predicate( of( TType ) ), as Action( of( TType ) ) ) _
-        byref as PriorityQueue( of( TType ) ) override
+          as Predicate( of TType ), as Action( of TType ) ) _
+        byref as PriorityQueue( of TType ) override
       declare function forEach( _
-          as PredicateFunc( of( TType ) ), as ActionFunc( of( TType ) ), as any ptr = 0, as any ptr = 0 ) _
-        byref as PriorityQueue( of( TType ) ) override
+          as PredicateFunc( of TType ), as ActionFunc( of TType ), as any ptr = 0, as any ptr = 0 ) _
+        byref as PriorityQueue( of TType ) override
       
     private:
       declare sub dispose()
-      declare function enqueueElement( as QueueElement( of( TType ) ) ptr ) _
-        byref as PriorityQueue( of( TType ) )
+      declare function enqueueElement( as QueueElement( of TType ) ptr ) _
+        byref as PriorityQueue( of TType )
       declare sub resize( as uinteger )
       
-      as QueueElement( of( TType ) ) ptr _elements( any )
+      as QueueElement( of TType ) ptr _elements( any )
       as uinteger _
         _size, _
         _initialSize, _
@@ -137,28 +128,26 @@
       as Collections.PriorityOrder _priorityOrder
   end type
   
-  implement_auto_ptr( of( PriorityQueue( __tcar__( TType ) ) ) )
+  implement_auto_ptr( of PriorityQueue( __tcar__( TType ) ) )
   
   /'
     Note that the default priority order is set to 'Descending'
     since this property is usually understood as 'the higher
     the value, the higher the priority'
   '/
-  constructor PriorityQueue( of( TType ) )()
+  constructor PriorityQueue( of TType )()
     constructor( 32, Collections.PriorityOrder.Descending )
   end constructor
   
-  constructor PriorityQueue( of( TType ) )( aSize as integer )
+  constructor PriorityQueue( of TType )( aSize as integer )
     constructor( aSize, Collections.PriorityOrder.Descending )
   end constructor
   
-  constructor PriorityQueue( of( TType ) )( _
-    aPriority as Collections.PriorityOrder )
-    
+  constructor PriorityQueue( of TType )( aPriority as Collections.PriorityOrder )
     constructor( 32, aPriority )
   end constructor
   
-  constructor PriorityQueue( of( TType ) )( aSize as integer, aPriority as Collections.PriorityOrder )
+  constructor PriorityQueue( of TType )( aSize as integer, aPriority as Collections.PriorityOrder )
     /'
       Primary constructor.
       
@@ -179,11 +168,11 @@
     _lowerBound = 1
   end constructor
   
-  destructor PriorityQueue( of( TType ) )()
+  destructor PriorityQueue( of TType )()
     dispose()
   end destructor
   
-  sub PriorityQueue( of( TType ) ).dispose()
+  sub PriorityQueue( of TType ).dispose()
     for i as integer = 1 to _size
       if( _elements( i ) <> 0 ) then
         delete( _elements( i ) )
@@ -192,19 +181,17 @@
     next
   end sub
   
-  property PriorityQueue( of( TType ) ).size() as integer
+  property PriorityQueue( of TType ).size() as integer
     return( _size )
   end property
   
-  property PriorityQueue( of( TType ) ).count() as integer
+  property PriorityQueue( of TType ).count() as integer
     return( _count )
   end property
   
-  property PriorityQueue( of( TType ) ).top() as TType ptr
-    /'
-      Peeks the top value field of the root of the heap, without removing it.
-      It will return a null pointer if the heap is empty.
-    '/
+  '' Peeks the top value field of the root of the heap, without removing it.
+  '' It will return a null pointer if the heap is empty.
+  property PriorityQueue( of TType ).top() as TType ptr
     if( _count > 0 ) then
       return( _elements( 1 )->value )
     else
@@ -212,7 +199,7 @@
     end if
   end property
   
-  function PriorityQueue( of( TType ) ).clear() byref as PriorityQueue( of( TType ) )
+  function PriorityQueue( of TType ).clear() byref as PriorityQueue( of TType )
     dispose()
     
     _size = _initialSize
@@ -232,7 +219,7 @@
     collections. See the implementation on the Array collections for
     details.
   '/
-  sub PriorityQueue( of( TType ) ).resize( newSize as uinteger )
+  sub PriorityQueue( of TType ).resize( newSize as uinteger )
     newSize = iif( newSize < _initialSize, _initialSize, newSize )
     
     _size = newSize
@@ -251,9 +238,9 @@
     state. The procedure starts at the tail and proceeds towards the
     root.
   '/
-  function PriorityQueue( of( TType ) ).enqueueElement( _
-      anElement as QueueElement( of( TType ) ) ptr ) _
-    byref as PriorityQueue( of( TType ) )
+  function PriorityQueue( of TType ).enqueueElement( _
+      anElement as QueueElement( of TType ) ptr ) _
+    byref as PriorityQueue( of TType )
     
     '' Increment the number of elements in the heap
     _count += 1
@@ -323,20 +310,19 @@
     return( this )
   end function
   
-  function PriorityQueue( of( TType ) ).enqueue( _
+  function PriorityQueue( of TType ).enqueue( _
       aPriority as integer, aValue as TType ptr ) _
-    byref as PriorityQueue( of( TType ) )
+    byref as PriorityQueue( of TType )
     
-    return( enqueueElement( new QueueElement( of( TType ) )( aPriority, aValue, true ) ) )
+    return( enqueueElement( new QueueElement( of TType )( aPriority, aValue, true ) ) )
   end function
   
-  function PriorityQueue( of( TType ) ).enqueue( _
+  function PriorityQueue( of TType ).enqueue( _
       aPriority as integer, _
       byref aValue as const TType ) _
-    byref as PriorityQueue( of( TType ) )
+    byref as PriorityQueue( of TType )
     
-    return( enqueueElement( new QueueElement( of( TType ) )( _
-        aPriority, cptr( TType ptr, @aValue ), false ) ) )
+    return( enqueueElement( new QueueElement( of TType )( aPriority, cptr( TType ptr, @aValue ), false ) ) )
   end function
   
   /'
@@ -346,7 +332,7 @@
     starting from the head (the root) element and proceeding towards
     the tail.
   '/
-  function PriorityQueue( of( TType ) ).dequeue() as TType ptr
+  function PriorityQueue( of TType ).dequeue() as TType ptr
     dim as TType ptr elementValue = 0
     
     if( _count > 0 ) then
@@ -455,9 +441,7 @@
     return( elementValue )
   end function
   
-  function PriorityQueue( of( TType ) ).forEach( anAction as Action( of( TType ) ) ) _
-    byref as PriorityQueue( of( TType ) )
-    
+  function PriorityQueue( of TType ).forEach( anAction as Action( of TType ) ) byref as PriorityQueue( of TType )
     for i as integer = 1 to _count
       anAction.invoke( _elements( i )->value )
     next
@@ -465,9 +449,9 @@
     return( this )
   end function
   
-  function PriorityQueue( of( TType ) ).forEach( _
-      anAction as ActionFunc( of( TType ) ), param as any ptr = 0 ) _
-    byref as PriorityQueue( of( TType ) )
+  function PriorityQueue( of TType ).forEach( _
+      anAction as ActionFunc( of TType ), param as any ptr = 0 ) _
+    byref as PriorityQueue( of TType )
     
     for i as integer = 1 to _count
       anAction( i, _elements( i )->value, param )
@@ -476,10 +460,10 @@
     return( this )
   end function
   
-  function PriorityQueue( of( TType ) ).forEach( _
-      aPredicate as PredicateFunc( of( TType ) ), anAction as ActionFunc( of( TType ) ), _
+  function PriorityQueue( of TType ).forEach( _
+      aPredicate as PredicateFunc( of TType ), anAction as ActionFunc( of TType ), _
       aPredicateParam as any ptr = 0, anActionParam as any ptr = 0 ) _
-    byref as PriorityQueue( of( TType ) )
+    byref as PriorityQueue( of TType )
     
     for i as integer = 1 to _count
       if( aPredicate( i, _elements( i )->value, aPredicateParam ) ) then
@@ -490,9 +474,9 @@
     return( this )
   end function
   
-  function PriorityQueue( of( TType ) ).forEach( _
-      aPredicate as Predicate( of( TType ) ), anAction as Action( of( TType ) ) ) _
-    byref as PriorityQueue( of( TType ) )
+  function PriorityQueue( of TType ).forEach( _
+      aPredicate as Predicate( of TType ), anAction as Action( of TType ) ) _
+    byref as PriorityQueue( of TType )
     
     for i as integer = 1 to count
       if( aPredicate.eval( _elements( i )->value ) ) then
@@ -503,11 +487,11 @@
     return( this )
   end function
   
-  operator = ( lhs as PriorityQueue( of( TType ) ), rhs as PriorityQueue( of( TType ) ) ) as integer
+  operator = ( lhs as PriorityQueue( of TType ), rhs as PriorityQueue( of TType ) ) as integer
     return( @lhs = @rhs )
   end operator
   
-  operator <> ( lhs as PriorityQueue( of( TType ) ), rhs as PriorityQueue( of( TType ) ) ) as integer
+  operator <> ( lhs as PriorityQueue( of TType ), rhs as PriorityQueue( of TType ) ) as integer
     return( @lhs <> @rhs )
   end operator
 #endmacro

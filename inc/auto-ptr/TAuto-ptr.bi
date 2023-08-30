@@ -49,10 +49,10 @@
   
   #ifndef __T__##Auto_ptr##__##TType##__##decl_start
   
-  type Auto_ptr( of( TType ) )
+  type auto_ptr( of TType )
     public:
       declare constructor( as __##TType ptr )
-      declare constructor( as Auto_ptr( of( TType ) ) )
+      declare constructor( as auto_ptr( of TType ) )
       declare destructor()
       
       declare operator cast() as __##TType ptr
@@ -60,7 +60,7 @@
       
     private:
       declare constructor()
-      declare operator let( as Auto_ptr( of( TType ) ) )
+      declare operator let( as auto_ptr( of TType ) )
       
       as __##TType ptr _ptr
       as boolean _owner
@@ -106,7 +106,7 @@
     not defined( __T__##Auto_ptr##__##TType##__##_decl_end )
   
   '' Default constructor is disabled
-  constructor Auto_ptr( of( TType ) )() : end constructor
+  constructor auto_ptr( of TType )() : end constructor
   
   /'
     Note the semantics of the copy constructor: whenever an
@@ -118,7 +118,7 @@
     delete itself but **NOT** the pointer it aggregates, since its
     ownership was taken by another instance.
   '/
-  constructor Auto_ptr( of( TType ) )( rhs as Auto_ptr( of( TType ) ) )
+  constructor auto_ptr( of TType )( rhs as auto_ptr( of TType ) )
     _ptr = rhs._ptr
     _owner = true
     rhs._owner = false
@@ -137,33 +137,33 @@
       return( auto_ptr( of( <Collection>( of( <Type> ) ) ) ) )
     end function
   '/
-  constructor Auto_ptr( of( TType ) )( aPtr as __##TType ptr )
+  constructor auto_ptr( of TType )( aPtr as __##TType ptr )
     _ptr = aPtr
     _owner = true
   end constructor
   
-  destructor Auto_ptr( of( TType ) )()
+  destructor auto_ptr( of TType )()
     if( _owner ) then
       delete( _ptr )
     end if
   end destructor
   
-  operator Auto_ptr( of( TType ) ).let( rhs as Auto_ptr( of( TType ) ) )
+  operator auto_ptr( of TType ).let( rhs as auto_ptr( of TType ) )
   end operator
   
-  operator Auto_ptr( of( TType ) ).cast() as TType ptr
+  operator auto_ptr( of TType ).cast() as TType ptr
     return( _ptr )
   end operator
   
-  operator Auto_ptr( of( TType ) ).cast() byref as TType
+  operator auto_ptr( of TType ).cast() byref as TType
     return( *_ptr )
   end operator
   
-  operator -> ( rhs as Auto_ptr( of( TType ) ) ) byref as TType
+  operator -> ( rhs as auto_ptr( of TType ) ) byref as TType
     return( cast( TType, rhs ) )
   end operator
   
-  operator * ( rhs as Auto_ptr( of( TType ) ) ) byref as TType
+  operator * ( rhs as auto_ptr( of TType ) ) byref as TType
     return( cast( TType, rhs ) )
   end operator
   

@@ -20,7 +20,9 @@
   Not required, just syntactic sugar to make the code (especially those
   within templating macros) more readable.
 '/
-#define of( TType ) ##TType
+#macro of ? ( TType )
+  ##TType
+#endmacro
 
 /'
   Very useful #defines to treat the variadic argument list of a macro as
@@ -129,12 +131,9 @@
   parameters can take any name you wish, it's only the signature
   that counts. 
 '/
-#macro template( TTemplate, T... )
+#macro template ? ( TTemplate, T... )
   #if( __va_has_arg__( __s_tcar__( __tcdr__( T ) ) ) )
-    template_type_keyed( _
-      TTemplate, _
-      __tcar__( T ), _
-      __tcar__( __tcdr__( T ) ) )
+    template_type_keyed( TTemplate, __tcar__( T ), __tcar__( __tcdr__( T ) ) )
   #else
     template_type_non_keyed( TTemplate, T )
   #endif

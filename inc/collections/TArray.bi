@@ -8,7 +8,7 @@
   template_action( __tcar__( TType ) )
   
   template_collection( TCollection, __tcar__( TType ) )
-  declare_auto_ptr( of( Array( __tcar__( TType ) ) ) )
+  declare_auto_ptr( of Array( __tcar__( TType ) ) )
   
   /'
     Represents a strongly typed dynamic array.
@@ -22,7 +22,7 @@
       - Implement multi-dimensional Arrays by using a variadic macro.
         I'm not too sure of the usefulness of this, though.
   '/
-  type Array( of( TType ) ) extends Collection( of( TType ) )
+  type Array( of TType ) extends Collection( of TType )
     public:
       declare constructor()
       declare constructor( as integer )
@@ -35,21 +35,20 @@
       declare property at( as integer ) byref as TType
       declare property elements() as TType ptr
       
-      declare function add( as TType ) byref as Array( of( TType ) )
-      declare function remove( as integer ) byref as Array( of( TType ) )
-      declare function insert( as TType, as integer ) byref as Array( of( TType ) )
-      declare function clear() byref as Array( of( TType ) ) override
+      declare function add( as TType ) byref as Array( of TType )
+      declare function remove( as integer ) byref as Array( of TType )
+      declare function insert( as TType, as integer ) byref as Array( of TType )
+      declare function clear() byref as Array( of TType ) override
       
-      declare function findAll( as Predicate( of( TType ) ) ) as Array( of( TType ) )
-      declare function forEach( as Action( of( TType ) ) ) byref as Array( of( TType ) ) override
-      declare function forEach( as ActionFunc( of( TType ) ), as any ptr = 0 ) _
-        byref as Array( of( TType ) ) override
+      declare function findAll( as Predicate( of TType ) ) as Array( of TType )
+      declare function forEach( as Action( of TType ) ) byref as Array( of TType ) override
+      declare function forEach( as ActionFunc( of TType ), as any ptr = 0 ) _
+        byref as Array( of TType ) override
       declare function forEach( _
-          as Predicate( of( TType ) ), as Action( of( TType ) ) ) _
-        byref as Array( of( TType ) ) override
+          as Predicate( of TType ), as Action( of TType ) ) byref as Array( of TType ) override
       declare function forEach( _
-          as PredicateFunc( of( TType ) ), as ActionFunc( of( TType ) ), as any ptr = 0, as any ptr = 0 ) _
-        byref as Array( of( TType ) ) override
+          as PredicateFunc( of TType ), as ActionFunc( of TType ), as any ptr = 0, as any ptr = 0 ) _
+        byref as Array( of TType ) override
       
     protected:
       declare sub resize( as integer )
@@ -63,13 +62,13 @@
         _lowerbound
   end type
   
-  implement_auto_ptr( of( Array( __tcar__( TType ) ) ) )
+  implement_auto_ptr( of Array( __tcar__( TType ) ) )
   
-  constructor Array( of( TType ) )()
+  constructor Array( of TType )()
     constructor( 16 )
   end constructor
   
-  constructor Array( of( TType ) )( aSize as integer )
+  constructor Array( of TType )( aSize as integer )
     _size = iif( aSize < 16, 16, aSize )
     
     _initialSize = _size
@@ -79,26 +78,26 @@
     redim _array( 0 to _size - 1 )
   end constructor
   
-  destructor Array( of( TType ) )()
+  destructor Array( of TType )()
   end destructor
   
-  operator Array( of( TType ) ).[]( index as integer ) byref as TType
+  operator Array( of TType ).[]( index as integer ) byref as TType
     return( _array( index ) )
   end operator
   
-  property Array( of( TType ) ).count() as integer
+  property Array( of TType ).count() as integer
     return( _count )
   end property
   
-  property Array( of( TType ) ).size() as integer
+  property Array( of TType ).size() as integer
     return( _size )
   end property
   
-  property Array( of( TType ) ).at( index as integer ) byref as TType
+  property Array( of TType ).at( index as integer ) byref as TType
     return( _array( index ) )
   end property
   
-  property Array( of( TType ) ).elements() as TType ptr
+  property Array( of TType ).elements() as TType ptr
     return( @_array( 0 ) )
   end property
   
@@ -122,7 +121,7 @@
       - The algorithm is the same as the one used for Lists. Perhaps
         both can use the same function, to improve code size.
   '/
-  sub Array( of( TType ) ).resize( aNewSize as integer )
+  sub Array( of TType ).resize( aNewSize as integer )
     aNewSize = iif( aNewSize < _initialSize, _initialSize, aNewSize )
     
     _size = aNewSize
@@ -134,7 +133,7 @@
   end sub
   
   '' Clears the array
-  function Array( of( TType ) ).clear() byref as Array( of( TType ) )
+  function Array( of TType ).clear() byref as Array( of TType )
     _size = _initialSize
     _count = 0
     _lowerBound = 0
@@ -145,7 +144,7 @@
   end function
   
   '' Adds an element to the array
-  function Array( of( TType ) ).add( anElement as TType ) byref as Array( of( TType ) )
+  function Array( of TType ).add( anElement as TType ) byref as Array( of TType )
     _count += 1
     
     if( _count > _size - _initialSize shr 1 ) then
@@ -161,7 +160,7 @@
   
   '' Removes an element from the array and adjust the others to fill
   '' in the blanks if needed.
-  function Array( of( TType ) ).remove( index as integer ) byref as Array( of( TType ) )
+  function Array( of TType ).remove( index as integer ) byref as Array( of TType )
     if( index < _count - 1 ) then
       for i as integer = index to _count - 1
         _array( i ) = _array( i + 1 )
@@ -179,9 +178,7 @@
   end function
   
   '' Inserts an element into the array at the specified index.
-  function Array( of( TType ) ).insert( anElement as TType, index as integer ) _
-    byref as Array( of( TType ) )
-    
+  function Array( of TType ).insert( anElement as TType, index as integer ) byref as Array( of TType )
     if( _count < 1 ) then
       '' If the array is empty, simply add the element.
       return( add( anElement ) )
@@ -219,10 +216,10 @@
   
   '' Returns an array with all the elements that satisfy the specified
   '' predicate.
-  function Array( of( TType ) ).findAll( aPredicate as Predicate( of( TType ) ) ) _
-    as Array( of( TType ) )
+  function Array( of TType ).findAll( aPredicate as Predicate( of TType ) ) _
+    as Array( of TType )
     
-    var result = Array( of( TType ) )
+    var result = Array( of TType )
     
     for i as integer = 0 to _count - 1
       if( aPredicate.eval( @_array( i ) ) ) then
@@ -234,9 +231,7 @@
   end function
   
   '' Invokes the specified action on each of the elements of the array
-  function Array( of( TType ) ).forEach( anAction as Action( of( TType ) ) ) _
-    byref as Array( of( TType ) )
-    
+  function Array( of TType ).forEach( anAction as Action( of TType ) ) byref as Array( of TType )
     dim as integer index = 0
     
     do while( index < _count )
@@ -248,9 +243,7 @@
     return( this )
   end function
   
-  function Array( of( TType ) ).forEach( anAction as ActionFunc( of( TType ) ), param as any ptr = 0 ) _
-    byref as Array( of( TType ) )
-    
+  function Array( of TType ).forEach( anAction as ActionFunc( of TType ), param as any ptr = 0 ) byref as Array( of( TType ) )
     for i as integer = 0 to _count - 1
       anAction( i, @_array( i ), param )
     next
@@ -260,9 +253,9 @@
   
   '' Invokes the specified action on each of the elements of the array if
   '' they satisfy the specified predicate.
-  function Array( of( TType ) ).forEach( _
-      aPredicate as Predicate( of( TType ) ), anAction as Action( of( TType ) ) ) _
-    byref as Array( of( TType ) )
+  function Array( of TType  ).forEach( _
+      aPredicate as Predicate( of TType ), anAction as Action( of TType ) ) _
+    byref as Array( of TType )
     
     for i as integer = 0 to _count - 1
       aPredicate.indexOf = i
@@ -276,10 +269,10 @@
     return( this )
   end function
   
-  function Array( of( TType ) ).forEach( _
-      aPredicate as PredicateFunc( of( TType ) ), anAction as ActionFunc( of( TType ) ), _
+  function Array( of TType ).forEach( _
+      aPredicate as PredicateFunc( of TType ), anAction as ActionFunc( of TType ), _
       aPredicateParam as any ptr = 0, anActionParam as any ptr = 0 ) _
-    byref as Array( of( TType ) )
+    byref as Array( of TType )
     
     for i as integer = 0 to _count - 1
       if( aPredicate( i, @_array( i ), aPredicateParam ) ) then
@@ -290,11 +283,11 @@
     return( this )
   end function
   
-  operator = ( lhs as Array( of( TType ) ), rhs as Array( of( TType ) ) ) as integer
+  operator = ( lhs as Array( of TType ), rhs as Array( of TType ) ) as integer
     return( @lhs = @rhs )
   end operator
   
-  operator <> ( lhs as Array( of( TType ) ), rhs as Array( of( TType ) ) ) as integer
+  operator <> ( lhs as Array( of TType ), rhs as Array( of TType ) ) as integer
     return( @lhs <> @rhs )
   end operator
 #endmacro

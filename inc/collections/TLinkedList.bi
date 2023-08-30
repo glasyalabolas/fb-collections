@@ -13,7 +13,7 @@
   '' Represents a node for the Linked List class
   #ifndef __T__##LinkedListNode##__##TType##__
   
-  type LinkedListNode( of( TType ) )
+  type LinkedListNode( of TType )
     public:
       declare constructor( as TType ptr, as boolean )
       declare destructor()
@@ -21,38 +21,37 @@
       '' The item associated with this node
       as TType ptr item
       
-      as LinkedListNode( of( TType ) ) ptr _
+      as LinkedListNode( of TType ) ptr _
         forward, backward
       
     private:
       declare constructor()
-      declare constructor( as LinkedListNode( of( TType ) ) )
-      declare operator let( as LinkedListNode( of( TType ) ) )
+      declare constructor( as LinkedListNode( of TType ) )
+      declare operator let( as LinkedListNode( of TType ) )
       
       as boolean _needsDisposing
   end type
   
-  constructor LinkedListNode( of( TType ) )()
-  end constructor
+  constructor LinkedListNode( of TType )() : end constructor
   
-  constructor LinkedListNode( of( TType ) )( anItem as TType ptr, needsDisposing as boolean )
+  constructor LinkedListNode( of TType )( anItem as TType ptr, needsDisposing as boolean )
     item = anItem
     _needsDisposing = needsDisposing
   end constructor
   
-  constructor LinkedListNode( of( TType ) )( rhs as LinkedListNode( of( TType ) ) )
+  constructor LinkedListNode( of TType )( rhs as LinkedListNode( of TType ) )
   end constructor
   
-  destructor LinkedListNode( of( TType ) )()
+  destructor LinkedListNode( of TType )()
     if( _needsDisposing andAlso item <> 0 ) then
       delete( item )
     end if
   end destructor
   
-  operator LinkedListNode( of( TType ) ).let( rhs as LinkedListNode( of( TType ) ) )
+  operator LinkedListNode( of TType ).let( rhs as LinkedListNode( of TType ) )
   end operator
   
-  operator = ( lhs as LinkedListNode( of( TType ) ), rhs as LinkedListNode( of( TType ) ) ) as integer
+  operator = ( lhs as LinkedListNode( of TType ), rhs as LinkedListNode( of TType ) ) as integer
     return( lhs.item = rhs.item )
   end operator
   
@@ -66,7 +65,7 @@
     traversal. Thus, it can be used both as a queue/heap or as a stack, by 
     using the appropriate methods to add/remove elements from it.
   '/
-  type LinkedList( of( TType ) ) extends Collection( of( TType ) )
+  type LinkedList( of TType ) extends Collection( of TType )
     public:
       declare constructor()
       declare virtual destructor() override
@@ -75,93 +74,84 @@
       
       declare property size() as integer override
       declare property count() as integer override
-      declare property first() as LinkedListNode( of( TType ) ) ptr
-      declare property last() as LinkedListNode( of( TType ) ) ptr
+      declare property first() as LinkedListNode( of TType ) ptr
+      declare property last() as LinkedListNode( of TType ) ptr
       declare property at( as integer ) as TType ptr
       
-      declare function clear() byref as LinkedList( of( TType ) ) override
+      declare function clear() byref as LinkedList( of TType ) override
       
       declare function contains( as const TType ) as boolean
       declare function contains( as TType ptr ) as boolean
-      declare function findNode( as const TType ) as LinkedListNode( of( TType ) ) ptr
-      declare function findNode( as TType ptr ) as LinkedListNode( of( TType ) ) ptr
-      declare function addBefore( as LinkedListNode( of( TType ) ) ptr, as TType ptr ) _
-        as LinkedListNode( of( TType ) ) ptr 
-      declare function addBefore( as LinkedListNode( of( TType ) ) ptr, byref as const TType ) _
-        as LinkedListNode( of( TType ) ) ptr 
+      declare function findNode( as const TType ) as LinkedListNode( of TType ) ptr
+      declare function findNode( as TType ptr ) as LinkedListNode( of TType ) ptr
+      declare function addBefore( as LinkedListNode( of TType ) ptr, as TType ptr ) _
+        as LinkedListNode( of TType ) ptr 
+      declare function addBefore( as LinkedListNode( of TType ) ptr, byref as const TType ) _
+        as LinkedListNode( of TType ) ptr 
+      declare function addAfter( as LinkedListNode( of TType ) ptr, as TType ptr ) as LinkedListNode( of TType ) ptr
       declare function addAfter( _
-          as LinkedListNode( of( TType ) ) ptr, as TType ptr ) _
-        as LinkedListNode( of( TType ) ) ptr
-      declare function addAfter( _
-          as LinkedListNode( of( TType ) ) ptr, byref as const TType ) _
-        as LinkedListNode( of( TType ) ) ptr
-      declare function addFirst( as TType ptr ) as LinkedListNode( of( TType ) ) ptr
-      declare function addFirst( byref as const TType ) as LinkedListNode( of( TType ) ) ptr
-      declare function addLast( as TType ptr ) as LinkedListNode( of( TType ) ) ptr
-      declare function addLast( byref as const TType ) as LinkedListNode( of( TType ) ) ptr
-      declare function remove( as LinkedListNode( of( TType ) ) ptr ) _
-        byref as LinkedList( of( TType ) )
-      declare function removeItem( as LinkedListNode( of( TType ) ) ptr ) as TType ptr
-      declare function removeFirst() byref as LinkedList( of( TType ) )
+          as LinkedListNode( of TType ) ptr, byref as const TType ) _
+        as LinkedListNode( of TType ) ptr
+      declare function addFirst( as TType ptr ) as LinkedListNode( of TType ) ptr
+      declare function addFirst( byref as const TType ) as LinkedListNode( of TType ) ptr
+      declare function addLast( as TType ptr ) as LinkedListNode( of TType ) ptr
+      declare function addLast( byref as const TType ) as LinkedListNode( of TType ) ptr
+      declare function remove( as LinkedListNode( of TType ) ptr ) byref as LinkedList( of TType )
+      declare function removeItem( as LinkedListNode( of TType ) ptr ) as TType ptr
+      declare function removeFirst() byref as LinkedList( of TType )
       declare function removeFirstItem() as TType ptr
-      declare function removeLast() byref as LinkedList( of( TType ) )
+      declare function removeLast() byref as LinkedList( of TType )
       declare function removeLastItem() as TType ptr
       
-      declare function forEach( as Action( of( TType ) ) ) _
-        byref as LinkedList( of( TType ) ) override
-      declare function forEach( as ActionFunc( of( TType ) ), as any ptr = 0 ) _
-        byref as LinkedList( of( TType ) ) override
-      declare function forEach( as Predicate( of( TType ) ), as Action( of( TType ) ) ) _
-        byref as LinkedList( of( TType ) ) override
+      declare function forEach( as Action( of TType ) ) byref as LinkedList( of TType ) override
+      declare function forEach( as ActionFunc( of TType ), as any ptr = 0 ) _
+        byref as LinkedList( of TType ) override
+      declare function forEach( as Predicate( of TType ), as Action( of TType ) ) _
+        byref as LinkedList( of TType ) override
       declare function forEach( _
-          as PredicateFunc( of( TType ) ), as ActionFunc( of( TType ) ), as any ptr = 0, as any ptr = 0 ) _
-        byref as LinkedList( of( TType ) ) override
+          as PredicateFunc( of TType ), as ActionFunc( of TType ), as any ptr = 0, as any ptr = 0 ) _
+        byref as LinkedList( of TType ) override
       
     protected:
-      declare constructor( as LinkedList( of( TType ) ) )
-      declare operator let( as LinkedList( of( TType ) ) )
+      declare constructor( as LinkedList( of TType ) )
+      declare operator let( as LinkedList( of TType ) )
     
     private:
       declare sub dispose()
       
       declare function addElementBefore( _
-          as LinkedListNode( of( TType ) ) ptr, as TType ptr, as boolean ) _
-        as LinkedListNode( of( TType ) ) ptr
+          as LinkedListNode( of TType ) ptr, as TType ptr, as boolean ) _
+        as LinkedListNode( of TType ) ptr
       declare function addElementAfter( _
-          as LinkedListNode( of( TType ) ) ptr, as TType ptr, as boolean ) _
-        as LinkedListNode( of( TType ) ) ptr
-      declare function addElementFirst( as TType ptr, as boolean ) _
-        as LinkedListNode( of( TType ) ) ptr
-      declare function addElementLast( as TType ptr, as boolean ) _
-        as LinkedListNode( of( TType ) ) ptr
+          as LinkedListNode( of TType ) ptr, as TType ptr, as boolean ) _
+        as LinkedListNode( of TType ) ptr
+      declare function addElementFirst( as TType ptr, as boolean ) as LinkedListNode( of TType ) ptr
+      declare function addElementLast( as TType ptr, as boolean ) as LinkedListNode( of TType ) ptr
       
-      as LinkedListNode( of( TType ) ) ptr _
+      as LinkedListNode( of TType ) ptr _
         _last, _first
       as integer _count
   end type
   
-  implement_auto_ptr( of( LinkedList( __tcar__( TType ) ) ) )
+  implement_auto_ptr( of LinkedList( __tcar__( TType ) ) )
   
-  constructor LinkedList( of( TType ) )()
-  end constructor
+  constructor LinkedList( of TType )() : end constructor
   
-  constructor LinkedList( of( TType ) )( rhs as LinkedList( of( TType ) ) )
-  end constructor
+  constructor LinkedList( of TType )( rhs as LinkedList( of TType ) ) : end constructor
   
-  operator LinkedList( of( TType ) ).let( rhs as LinkedList( of( TType ) ) )
-  end operator
+  operator LinkedList( of TType ).let( rhs as LinkedList( of TType ) ) : end operator
   
-  destructor LinkedList( of( TType ) )()
+  destructor LinkedList( of TType )()
     dispose()
   end destructor
   
-  sub LinkedList( of( TType ) ).dispose()
+  sub LinkedList( of TType ).dispose()
     do while( _count > 0 )
       remove( _last )
     loop
   end sub
   
-  operator LinkedList( of( TType ) ).[] ( index as integer ) as TType ptr
+  operator LinkedList( of TType ).[] ( index as integer ) as TType ptr
     var n = first
     
     for i as integer = 0 to index - 1
@@ -171,29 +161,29 @@
     return( n->item )
   end operator
   
-  property LinkedList( of( TType ) ).size() as integer
+  property LinkedList( of TType ).size() as integer
     return( _count )
   end property
   
-  property LinkedList( of( TType ) ).count() as integer
+  property LinkedList( of TType ).count() as integer
     return( _count )
   end property
   
   '' Returns the first node in the list
-  property LinkedList( of( TType ) ).first() as LinkedListNode( of( TType ) ) ptr
+  property LinkedList( of TType ).first() as LinkedListNode( of TType ) ptr
     return( _first )
   end property
   
   '' Returns the last node in the list
-  property LinkedList( of( TType ) ).last() as LinkedListNode( of( TType ) ) ptr
+  property LinkedList( of TType ).last() as LinkedListNode( of TType ) ptr
     return( _last )
   end property
   
   '' Returns the value associated at the specified index
-  property LinkedList( of( TType ) ).at( index as integer ) as TType ptr
+  property LinkedList( of TType ).at( index as integer ) as TType ptr
     var n = _first
     
-    dim as LinkedListNode( of( TType ) ) ptr node
+    dim as LinkedListNode( of TType ) ptr node
     
     for i as integer = 0 to _count - 1
       if( i = index ) then
@@ -205,11 +195,11 @@
     return( node->item )  
   end property
   
-  function LinkedList( of( TType ) ).contains( anItem as const TType ) as boolean
+  function LinkedList( of TType ).contains( anItem as const TType ) as boolean
     return( findNode( anItem ) <> 0 )
   end function
   
-  function LinkedList( of( TType ) ).contains( anItem as TType ptr ) as boolean
+  function LinkedList( of TType ).contains( anItem as TType ptr ) as boolean
     return( findNode( anItem ) <> 0 )
   end function
   
@@ -217,10 +207,8 @@
     Returns the node in the Linked List that contains the specified
     reference, if it exists. Otherwise returns a null pointer.
   '/
-  function LinkedList( of( TType ) ).findNode( anItem as const TType ) _
-    as LinkedListNode( of( TType ) ) ptr
-    
-    dim as LinkedListNode( of( TType ) ) ptr result
+  function LinkedList( of TType ).findNode( anItem as const TType ) as LinkedListNode( of TType ) ptr
+    dim as LinkedListNode( of TType ) ptr result
     
     var node = _first
     
@@ -236,10 +224,8 @@
     return( result )
   end function
   
-  function LinkedList( of( TType ) ).findNode( anItem as TType ptr ) _
-    as LinkedListNode( of( TType ) ) ptr
-    
-    dim as LinkedListNode( of( TType ) ) ptr result
+  function LinkedList( of TType ).findNode( anItem as TType ptr ) as LinkedListNode( of TType ) ptr
+    dim as LinkedListNode( of TType ) ptr result
     
     var node = _first
     
@@ -256,7 +242,7 @@
   end function
   
   '' Clears the list
-  function LinkedList( of( TType ) ).clear() byref as LinkedList( of( TType ) )
+  function LinkedList( of TType ).clear() byref as LinkedList( of TType )
     dispose()
     
     _count = 0
@@ -267,11 +253,11 @@
   end function
   
   '' Inserts an item before the specified node.
-  function LinkedList( of( TType ) ).addElementBefore( _
-      aNode as LinkedListNode( of( TType ) ) ptr, anItem as TType ptr, needsDisposing as boolean ) _
-    as LinkedListNode( of( TType ) ) ptr
+  function LinkedList( of TType ).addElementBefore( _
+      aNode as LinkedListNode( of TType ) ptr, anItem as TType ptr, needsDisposing as boolean ) _
+    as LinkedListNode( of TType ) ptr
     
-    var newNode = new LinkedListNode( of( TType ) )( anItem, needsDisposing )
+    var newNode = new LinkedListNode( of TType )( anItem, needsDisposing )
     
     newNode->backward = aNode->backward
     newNode->forward = aNode
@@ -288,26 +274,26 @@
     return( newNode )
   end function
   
-  function LinkedList( of( TType ) ).addBefore( _
-      aNode as LinkedListNode( of( TType ) ) ptr, anItem as TType ptr ) _
-    as LinkedListNode( of( TType ) ) ptr
+  function LinkedList( of TType ).addBefore( _
+      aNode as LinkedListNode( of TType ) ptr, anItem as TType ptr ) _
+    as LinkedListNode( of TType ) ptr
     
     return( addElementBefore( aNode, anItem, true ) )
   end function
   
-  function LinkedList( of( TType ) ).addBefore( _
-      aNode as LinkedListNode( of( TType ) ) ptr, byref anItem as const TType ) _
-    as LinkedListNode( of( TType ) ) ptr
+  function LinkedList( of TType ).addBefore( _
+      aNode as LinkedListNode( of TType ) ptr, byref anItem as const TType ) _
+    as LinkedListNode( of TType ) ptr
     
     return( addElementBefore( aNode, cptr( TType ptr, @anItem ), false ) )
   end function
   
   '' Inserts an item after the specified node.
-  function LinkedList( of( TType ) ).addElementAfter( _
-      aNode as LinkedListNode( of( TType ) ) ptr, anItem as TType ptr, needsDisposing as boolean ) _
-    as LinkedListNode( of( TType ) ) ptr
+  function LinkedList( of TType ).addElementAfter( _
+      aNode as LinkedListNode( of TType ) ptr, anItem as TType ptr, needsDisposing as boolean ) _
+    as LinkedListNode( of TType ) ptr
     
-    var newNode = new LinkedListNode( of( TType ) )( anItem, needsDisposing )
+    var newNode = new LinkedListNode( of TType )( anItem, needsDisposing )
     
     newNode->backward = aNode
     newNode->forward = aNode->forward
@@ -324,27 +310,27 @@
     return( newNode )
   end function
   
-  function LinkedList( of( TType ) ).addAfter( _
-      aNode as LinkedListNode( of( TType ) ) ptr, anItem as TType ptr ) _
-    as LinkedListNode( of( TType ) ) ptr
+  function LinkedList( of TType ).addAfter( _
+      aNode as LinkedListNode( of TType ) ptr, anItem as TType ptr ) _
+    as LinkedListNode( of TType ) ptr
     
     return( addElementAfter( aNode, anItem, true ) )
   end function
   
-  function LinkedList( of( TType ) ).addAfter( _
-      aNode as LinkedListNode( of( TType ) ) ptr, byref anItem as const TType ) _
-    as LinkedListNode( of( TType ) ) ptr
+  function LinkedList( of TType ).addAfter( _
+      aNode as LinkedListNode( of TType ) ptr, byref anItem as const TType ) _
+    as LinkedListNode( of TType ) ptr
     
     return( addElementAfter( aNode, cptr( TType ptr, @anItem ), false ) )
   end function
   
   '' Inserts an item at the beginning of the list.
-  function LinkedList( of( TType ) ).addElementFirst( _
+  function LinkedList( of TType ).addElementFirst( _
       anItem as TType ptr, needsDisposing as boolean ) _
-    as LinkedListNode( of( TType ) ) ptr
+    as LinkedListNode( of TType ) ptr
     
     if( _first = 0 ) then
-      var newNode = new LinkedListNode( of( TType ) )( anItem, needsDisposing )
+      var newNode = new LinkedListNode( of TType )( anItem, needsDisposing )
       
       _first = newNode
       _last = newNode
@@ -360,9 +346,7 @@
     return( addElementBefore( _first, anItem, needsDisposing ) )
   end function
   
-  function LinkedList( of( TType ) ).addFirst( anItem as TType ptr ) _
-    as LinkedListNode( of( TType ) ) ptr
-    
+  function LinkedList( of TType ).addFirst( anItem as TType ptr ) as LinkedListNode( of TType ) ptr
     return( addElementFirst( anItem, true ) )
   end function
   
@@ -373,8 +357,8 @@
   end function
   
   '' Inserts an item at the end of the list.
-  function LinkedList( of( TType ) ).addElementLast( anItem as TType ptr, needsDisposing as boolean ) _
-    as LinkedListNode( of( TType ) ) ptr
+  function LinkedList( of TType ).addElementLast( anItem as TType ptr, needsDisposing as boolean ) _
+    as LinkedListNode( of TType ) ptr
     
     if( _last = 0 ) then
       return( addElementFirst( anItem, needsDisposing ) )
@@ -383,21 +367,17 @@
     return( addElementAfter( _last, anItem, needsDisposing ) )
   end function
   
-  function LinkedList( of( TType ) ).addLast( anItem as TType ptr ) _
-    as LinkedListNode( of( TType ) ) ptr
-    
+  function LinkedList( of TType ).addLast( anItem as TType ptr ) as LinkedListNode( of TType ) ptr
     return( addElementLast( anItem, true ) )
   end function
   
-  function LinkedList( of( TType ) ).addLast( byref anItem as const TType ) _
-    as LinkedListNode( of( TType ) ) ptr
-    
+  function LinkedList( of TType ).addLast( byref anItem as const TType ) as LinkedListNode( of( TType ) ) ptr
     return( addElementLast( cptr( TType ptr, @anItem ), false ) )
   end function
   
   '' Removes the specified node from the list
-  function LinkedList( of( TType ) ).remove( node as LinkedListNode( of( TType ) ) ptr ) _
-    byref as LinkedList( of( TType ) )
+  function LinkedList( of TType ).remove( node as LinkedListNode( of TType ) ptr ) _
+    byref as LinkedList( of TType )
     
     if( node <> 0 andAlso _count > 0 ) then
       if( node->backward = 0 ) then
@@ -420,9 +400,7 @@
     return( this )
   end function
   
-  function LinkedList( of( TType ) ).removeItem( node as LinkedListNode( of( TType ) ) ptr ) _
-    as TType ptr
-    
+  function LinkedList( of TType ).removeItem( node as LinkedListNode( of TType ) ptr ) as TType ptr
     dim as TType ptr result
     
     if( node <> 0 andAlso _count > 0 ) then
@@ -450,25 +428,25 @@
   end function
   
   '' Removes the first node on the list
-  function LinkedList( of( TType ) ).removeFirst() byref as LinkedList( of( TType ) )
+  function LinkedList( of TType ).removeFirst() byref as LinkedList( of TType )
     return( remove( _first ) )
   end function
   
-  function LinkedList( of( TType ) ).removeFirstItem() as TType ptr
+  function LinkedList( of TType ).removeFirstItem() as TType ptr
     return( removeItem( _first ) )
   end function
   
   '' Removes the last node in the list
-  function LinkedList( of( TType ) ).removeLast() byref as LinkedList( of( TType ) )
+  function LinkedList( of TType ).removeLast() byref as LinkedList( of TType )
     return( remove( _last ) )
   end function
   
-  function LinkedList( of( TType ) ).removeLastItem() as TType ptr
+  function LinkedList( of TType ).removeLastItem() as TType ptr
     return( removeItem( _last ) )
   end function
   
-  function LinkedList( of( TType ) ).forEach( anAction as Action( of( TType ) ) ) _
-    byref as LinkedList( of( TType ) )
+  function LinkedList( of TType ).forEach( anAction as Action( of TType ) ) _
+    byref as LinkedList( of TType )
     
     var n = _first
     
@@ -480,8 +458,8 @@
     return( this )
   end function
   
-  function LinkedList( of( TType ) ).forEach( anAction as ActionFunc( of( TType ) ), param as any ptr = 0 ) _
-    byref as LinkedList( of( TType ) )
+  function LinkedList( of TType ).forEach( anAction as ActionFunc( of TType ), param as any ptr = 0 ) _
+    byref as LinkedList( of TType )
     
     var n = _first
     
@@ -493,9 +471,9 @@
     return( this )
   end function
   
-  function LinkedList( of( TType ) ).forEach( _
-      aPredicate as Predicate( of( TType ) ), anAction as Action( of( TType ) ) ) _
-    byref as LinkedList( of( TType ) )
+  function LinkedList( of TType ).forEach( _
+      aPredicate as Predicate( of TType ), anAction as Action( of TType ) ) _
+    byref as LinkedList( of TType )
     
     var n = _first
     
@@ -510,10 +488,10 @@
     return( this )
   end function
   
-  function LinkedList( of( TType ) ).forEach( _
-      aPredicate as PredicateFunc( of( TType ) ), anAction as ActionFunc( of( TType ) ), _
+  function LinkedList( of TType ).forEach( _
+      aPredicate as PredicateFunc( of TType ), anAction as ActionFunc( of TType ), _
       aPredicateParam as any ptr = 0, anActionParam as any ptr = 0 ) _
-    byref as LinkedList( of( TType ) )
+    byref as LinkedList( of TType )
     
     var n = _first
     
@@ -528,11 +506,11 @@
     return( this )
   end function
   
-  operator = ( lhs as LinkedList( of( TType ) ), rhs as LinkedList( of( TType ) ) ) as integer
+  operator = ( lhs as LinkedList( of TType ), rhs as LinkedList( of TType ) ) as integer
     return( @lhs = @rhs )
   end operator
   
-  operator <> ( lhs as LinkedList( of( TType ) ), rhs as LinkedList( of( TType ) ) ) as integer
+  operator <> ( lhs as LinkedList( of TType ), rhs as LinkedList( of TType ) ) as integer
     return( @lhs <> @rhs )
   end operator
 #endmacro

@@ -1,7 +1,7 @@
 /'
   Some predicates to test
 '/
-type PersonsBelowAge extends Predicate( of( Person ) )
+type PersonsBelowAge extends Predicate( of Person )
   public:
     declare constructor( as integer )
     declare destructor() override

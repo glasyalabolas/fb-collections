@@ -1,10 +1,8 @@
 #include once "../inc/collections.bi"
 #include once "../common/person.bi"
 
-/'
-  Linked list example usage
-'/
-template( LinkedList, of( Person ) )
+'' Linked list example usage
+template LinkedList, of Person
 
 #include once "../common/person-predicates.bi"
 #include once "../common/person-actions.bi"
@@ -13,7 +11,7 @@ scope
   var _
     p1 = Person( "Person 1", 1 ), _
     p2 = Person( "Person 2", 2 ), _
-    aLinkedList = LinkedList( of( Person ) )()
+    aLinkedList = LinkedList( of Person )()
   
   with aLinkedList
     .addFirst( new Person( "Paul Doe", 37 ) )

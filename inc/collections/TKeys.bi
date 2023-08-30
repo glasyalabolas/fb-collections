@@ -6,44 +6,43 @@
 #define Key( TType ) __T__##Key##__##TType
 
 '' Keys for all FreeBasic standard data types
-type Key( of( string ) )
+type Key( of string )
   public:
     declare constructor()
     declare constructor( as const string )
-    declare constructor( as Key( of( string ) ) )
+    declare constructor( as Key( of string ) )
     declare destructor()
     
     declare operator let( as string )
-    declare operator let( as Key( of( string ) ) )
+    declare operator let( as Key( of string ) )
     
     declare function getHashCode() as ulong
     
     as string value
 end type
 
-constructor Key( of( string ) )()
+constructor Key( of string )()
 end constructor
 
-constructor Key( of( string ) )( aKey as const string )
+constructor Key( of string )( aKey as const string )
   value = aKey
 end constructor
 
-constructor Key( of( string ) )( rhs as Key( of( string ) ) )
+constructor Key( of string )( rhs as Key( of string ) )
   value = rhs.value
 end constructor
 
-destructor Key( of( string ) )()
-end destructor
+destructor Key( of string )() : end destructor
 
-operator Key( of( string ) ).let( rhs as string )
+operator Key( of string ).let( rhs as string )
   value = rhs
 end operator
 
-operator Key( of( string ) ).let( rhs as Key( of( string ) ) )
+operator Key( of string ).let( rhs as Key( of string ) )
   value = rhs.value
 end operator
 
-function Key( of( string ) ).getHashCode() as ulong
+function Key( of string ).getHashCode() as ulong
   #define ROT( a, b ) ( ( a shl b ) or ( a shr ( 32 - b ) ) )
   
   dim as zstring ptr strp = strPtr( value )
@@ -84,106 +83,105 @@ function Key( of( string ) ).getHashCode() as ulong
   return( hash )
 end function
 
-operator = ( lhs as Key( of( string ) ), rhs as Key( of( string ) ) ) as integer
+operator = ( lhs as Key( of string ), rhs as Key( of string ) ) as integer
   return( lhs.value = rhs.value )
 end operator
 
 #macro template_key( TType )
   #ifndef __T__##Key##__##TType
   
-  type Key( of( TType ) )
+  type Key( of TType )
     public:
       declare constructor()
       declare constructor( as const TType )
-      declare constructor( as Key( of( TType ) ) )
+      declare constructor( as Key( of TType ) )
       declare destructor()
       
       declare operator let( as TType )
-      declare operator let( as Key( of( TType ) ) )
+      declare operator let( as Key( of TType ) )
       
       declare function getHashCode() as ulong
       
       as TType value
   end type
   
-  constructor Key( of( TType ) )()
+  constructor Key( of TType )()
   end constructor
   
-  constructor Key( of( TType ) )( aValue as const TType )
+  constructor Key( of TType )( aValue as const TType )
     value = aValue
   end constructor
   
-  constructor Key( of( TType ) )( aKey as Key( of( TType ) ) )
+  constructor Key( of TType )( aKey as Key( of TType ) )
     value = aKey.value
   end constructor
   
-  destructor Key( of( TType ) )()
-  end destructor
+  destructor Key( of TType )() : end destructor
   
-  operator Key( of( TType ) ).let( aValue as TType )
+  operator Key( of TType ).let( aValue as TType )
     value = aValue
   end operator
   
-  operator Key( of( TType ) ).let( aKey as Key( of( TType ) ) )
+  operator Key( of TType ).let( aKey as Key( of TType ) )
     value = aKey.value
   end operator
   
-  function Key( of( TType ) ).getHashCode() as ulong
+  function Key( of TType ).getHashCode() as ulong
     return( culng( value ) )
   end function
   
-  operator = ( lhs as Key( of( TType ) ), rhs as Key( of( TType ) ) ) as integer
+  operator = ( lhs as Key( of TType ), rhs as Key( of TType ) ) as integer
     return( lhs.value = rhs.value )
   end operator
   
   #endif
 #endmacro
-  
+
 #macro template_key_float( TType )
   #ifndef __T__##Key##__##TType
   
-  type Key( of( TType ) )
+  type Key( of TType )
     public:
       declare constructor()
       declare constructor( as const TType )
-      declare constructor( as Key( of( TType ) ) )
+      declare constructor( as Key( of TType ) )
       declare destructor()
       
       declare operator let( as TType )
-      declare operator let( as Key( of( TType ) ) )
+      declare operator let( as Key( of TType ) )
       
       declare function getHashCode() as ulong
       
       as TType value
   end type
   
-  constructor Key( of( TType ) )()
+  constructor Key( of TType )()
   end constructor
   
-  constructor Key( of( TType ) )( aValue as const TType )
+  constructor Key( of TType )( aValue as const TType )
     value = aValue
   end constructor
   
-  constructor Key( of( TType ) )( aKey as Key( of( TType ) ) )
+  constructor Key( of TType )( aKey as Key( of TType ) )
     value = aKey.value
   end constructor
   
-  destructor Key( of( TType ) )()
+  destructor Key( of TType )()
   end destructor
   
-  operator Key( of( TType ) ).let( aValue as TType )
+  operator Key( of TType ).let( aValue as TType )
     value = aValue
   end operator
   
-  operator Key( of( TType ) ).let( aKey as Key( of( TType ) ) )
+  operator Key( of TType ).let( aKey as Key( of TType ) )
     value = aKey.value
   end operator
   
-  function Key( of( TType ) ).getHashCode() as ulong
+  function Key( of TType ).getHashCode() as ulong
     return( *cptr( ulong ptr, @value ) )
   end function
   
-  operator = ( lhs as Key( of( TType ) ), rhs as Key( of( TType ) ) ) as integer
+  operator = ( lhs as Key( of TType ), rhs as Key( of TType ) ) as integer
     return( lhs.value = rhs.value )
   end operator
   

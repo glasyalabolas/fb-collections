@@ -18,21 +18,21 @@
   namespace or qualify as usual:
   
   namespace My
-    template( aCollection, of( Something ) )
+    template( aCollection, of Something )
   end namespace
   
-  var anInstance = My.aCollection( of( Something ) )
+  var anInstance = My.aCollection( of Something )
 '/
-template( Array, of( Person ) )
-template( Array, of( Person ) )
-template( List, of( Person ) )
-template( List, of( Person ) )
-template( LinkedList, of( Person ) )
-template( LinkedList, of( Person ) )
-template( Dictionary, of( string ), of( Person ) )
-template( Dictionary, of( string ), of( Person ) )
-template( PriorityQueue, of( Person ) )
-template( PriorityQueue, of( Person ) )
+template( Array, of Person )
+template( Array, of Person )
+template( List, of Person )
+template( List, of Person )
+template( LinkedList, of Person )
+template( LinkedList, of Person )
+template( Dictionary, of string, of Person )
+template( Dictionary, of string, of Person )
+template( PriorityQueue, of Person )
+template( PriorityQueue, of Person )
 
 /'
   This is something you can't do. You can't template Arrays
@@ -52,29 +52,29 @@ template( PriorityQueue, of( Person ) )
   However, all of the other collections support nesting. You can
   thus template data structures as complex as you might need.
 '/
-template( List, of( Array( of( Person ) ) ) )
-template( List, of( List( of( Person ) ) ) )
-template( List, of( LinkedList( of( Person ) ) ) )
-template( List, of( Dictionary( of( string ), of( Person ) ) ) )
-template( List, of( PriorityQueue( of( Person ) ) ) )
+template( List, of Array( of Person ) )
+template( List, of List( of Person ) )
+template( List, of LinkedList( of Person ) )
+template( List, of Dictionary( of string, of Person ) )
+template( List, of PriorityQueue( of Person ) )
 
-template( LinkedList, of( Array( of( Person ) ) ) )
-template( LinkedList, of( List( of( Person ) ) ) )
-template( LinkedList, of( LinkedList( of( Person ) ) ) )
-template( LinkedList, of( Dictionary( of( string ), of( Person ) ) ) )
-template( LinkedList, of( PriorityQueue( of( Person ) ) ) )
+template( LinkedList, of Array( of Person ) )
+template( LinkedList, of List( of Person ) )
+template( LinkedList, of LinkedList( of Person ) )
+template( LinkedList, of Dictionary( of string, of Person ) )
+template( LinkedList, of PriorityQueue( of Person ) )
 
-template( Dictionary, of( string ), of( Array( of( Person ) ) ) )
-template( Dictionary, of( string ), of( List( of( Person ) ) ) )
-template( Dictionary, of( string ), of( LinkedList( of( Person ) ) ) )
-template( Dictionary, of( string ), of( Dictionary( of( string ), of( Person ) ) ) )
-template( Dictionary, of( string ), of( PriorityQueue( of( Person ) ) ) )
+template( Dictionary, of string, of Array( of Person ) )
+template( Dictionary, of string, of List( of Person ) )
+template( Dictionary, of string, of LinkedList( of Person ) )
+template( Dictionary, of string, of Dictionary( of string, of Person ) )
+template( Dictionary, of string, of PriorityQueue( of Person ) )
 
-template( PriorityQueue, of( Array( of( Person ) ) ) )
-template( PriorityQueue, of( List( of( Person ) ) ) )
-template( PriorityQueue, of( LinkedList( of( Person ) ) ) )
-template( PriorityQueue, of( Dictionary( of( string ), of( Person ) ) ) )
-template( PriorityQueue, of( PriorityQueue( of( Person ) ) ) )
+template( PriorityQueue, of Array( of Person ) )
+template( PriorityQueue, of List( of Person ) )
+template( PriorityQueue, of LinkedList( of Person ) )
+template( PriorityQueue, of Dictionary( of string, of Person ) )
+template( PriorityQueue, of PriorityQueue( of Person ) )
 
 /'
   All sort of data structures can be created this way. The only
@@ -84,13 +84,13 @@ template( PriorityQueue, of( PriorityQueue( of( Person ) ) ) )
   This one templates a Dictionary, indexed by an integer, of priority
   queues of linked lists of Persons. 
 '/
-template( Dictionary, of( integer ), of( PriorityQueue( of( LinkedList( of( Person ) ) ) ) ) )
+template( Dictionary, of integer, of PriorityQueue( of LinkedList( of Person ) ) )
 
 /'
   And this is a usage example of such a compound collection
 '/
 var _
-  aComplexCollection = Dictionary( of( integer ), of( PriorityQueue( of( LinkedList( of( Person ) ) ) ) ) )()
+  aComplexCollection = Dictionary( of integer, of PriorityQueue( of LinkedList( of Person ) ) )()
 
 /'
   The priority queues are straightforward to add to the dictionary:
@@ -101,7 +101,7 @@ var _
   which is the default setting.
 '/
 aComplexCollection.add( 23434, new PriorityQueue( _
-  of( LinkedList( of( Person ) ) ) )( Collections.PriorityOrder.Descending ) )
+  of LinkedList( of Person ) )( Collections.PriorityOrder.Descending ) )
 
 /'
   Adding the linked lists and the persons is not as straightforward,
@@ -113,8 +113,8 @@ aComplexCollection.add( 23434, new PriorityQueue( _
 '/
 var _
   aPriorityQueue = aComplexCollection.find( 23434 ), _
-  aLinkedList = new LinkedList( of( Person ) )(), _
-  anotherLinkedList = new LinkedList( of( Person ) )()
+  aLinkedList = new LinkedList( of Person )(), _
+  anotherLinkedList = new LinkedList( of Person )()
 
 aLinkedList->addLast( new Person( "Paul", 37 ) )
 aLinkedList->addLast( new Person( "Mary", 24 ) )
@@ -126,7 +126,7 @@ anotherLinkedList->addLast( new Person( "Anne", 38 ) )
   Just a little function to compute the average ages of the
   persons within a linked list.
 '/
-function averageAgeOf( aList as LinkedList( of( Person ) ) ptr ) as integer
+function averageAgeOf( aList as LinkedList( of Person ) ptr ) as integer
   if( aList->count = 0 ) then
     return( 0 )
   end if

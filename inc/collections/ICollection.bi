@@ -14,62 +14,56 @@
   #ifndef __T__##ICollection##__##TType
   
   '' Base class for Collections
-  type Collection( of( TType ) ) extends Object
+  type Collection( of TType ) extends Object
     declare virtual destructor()
     
     declare virtual property size() as integer
     declare virtual property count() as integer
     
-    declare virtual function clear() byref as Collection( of( TType ) )
-    declare virtual function forEach( as Action( of( TType ) ) ) byref as Collection( of( TType ) )
-    declare virtual function forEach( as ActionFunc( of( TType ) ), as any ptr = 0 ) _
-      byref as Collection( of( TType ) )
-    declare virtual function forEach( as Predicate( of( TType ) ), as Action( of( TType ) ) ) _
-      byref as Collection( of( TType ) )
+    declare virtual function clear() byref as Collection( of TType )
+    declare virtual function forEach( as Action( of TType ) ) byref as Collection( of TType )
+    declare virtual function forEach( as ActionFunc( of TType ), as any ptr = 0 ) _
+      byref as Collection( of TType )
+    declare virtual function forEach( as Predicate( of TType ), as Action( of TType ) ) _
+      byref as Collection( of TType )
     declare virtual function forEach( _
-        as PredicateFunc( of( TType ) ), as ActionFunc( of( TType ) ), as any ptr = 0, as any ptr = 0 ) _
-      byref as Collection( of( TType ) )
+        as PredicateFunc( of TType ), as ActionFunc( of TType ), as any ptr = 0, as any ptr = 0 ) _
+      byref as Collection( of TType )
   end type
   
-  destructor Collection( of( TType ) )() export
-  end destructor
+  destructor Collection( of TType )() : end destructor
   
-  property Collection( of( TType ) ).size() as integer export
+  property Collection( of TType ).size() as integer
     return( count )
   end property
   
-  property Collection( of( TType ) ).count() as integer export
+  property Collection( of TType ).count() as integer
     return( 0 )
   end property
   
-  function Collection( of( TType ) ).clear() byref as Collection( of( TType ) ) export
+  function Collection( of TType ).clear() byref as Collection( of TType )
     return( this )
   end function
   
-  function Collection( of( TType ) ).forEach( anAction as Action( of( TType ) ) ) _
-    byref as Collection( of( TType ) ) export
+  function Collection( of TType ).forEach( anAction as Action( of TType ) ) byref as Collection( of TType )
+    return( this )
+  end function
+  
+  function Collection( of TType ).forEach( _
+      anAction as ActionFunc( of TType ), anActionParam as any ptr = 0 ) byref as Collection( of TType )
     
     return( this )
   end function
   
-  function Collection( of( TType ) ).forEach( _
-      anAction as ActionFunc( of( TType ) ), anActionParam as any ptr = 0 ) _
-    byref as Collection( of( TType ) ) export
+  function Collection( of TType ).forEach( _
+      aPredicate as Predicate( of TType ), anAction as Action( of TType ) ) byref as Collection( of TType )
     
     return( this )
   end function
   
-  function Collection( of( TType ) ).forEach( _
-      aPredicate as Predicate( of( TType ) ), anAction as Action( of( TType ) ) ) _
-    byref as Collection( of( TType ) ) export
-    
-    return( this )
-  end function
-  
-  function Collection( of( TType ) ).forEach( _
-      aPredicate as PredicateFunc( of( TType ) ), anActionFunc as ActionFunc( of( TType ) ), _
-      aPredicateParam as any ptr = 0, anActionParam as any ptr = 0 ) _
-    byref as Collection( of( TType ) ) export
+  function Collection( of TType ).forEach( _
+      aPredicate as PredicateFunc( of TType ), anActionFunc as ActionFunc( of TType ), _
+      aPredicateParam as any ptr = 0, anActionParam as any ptr = 0 ) byref as Collection( of TType )
     
     return( this )
   end function

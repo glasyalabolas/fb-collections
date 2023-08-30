@@ -7,6 +7,10 @@
 /'
   Framework for strongly-typed templated collections.
   
+  29/08/2023
+    Refactored to take advantage of some of the new features available
+    in FreeBasic 1.10
+  
   10/30/2019
     Added support for variadic macros (Freebasic >= 1.07.1).
   
@@ -18,7 +22,7 @@
       on performance but a MAJOR impact on executable size and
       compile times.
     - Add support for disposing callbacks for all collections.
-    - Implement the selectAll() method for all collections where it
+    - Implement the select*() methods for all collections where it
       will make sense.
     - Implement iterators.
 '/
@@ -56,8 +60,5 @@ __include__( __FBFW_COLLECTIONS_FOLDER__, TList.bi )
 __include__( __FBFW_COLLECTIONS_FOLDER__, TLinkedList.bi )
 __include__( __FBFW_COLLECTIONS_FOLDER__, TDictionary.bi )
 __include__( __FBFW_COLLECTIONS_FOLDER__, TPriorityQueue.bi )
-'' TODO: refactor these two collections
-'__include__( __FBFW_COLLECTIONS_FOLDER__, TUnorderedMap.bi )
-'__include__( __FBFW_COLLECTIONS_FOLDER__, TStack.bi )
 
 #endif

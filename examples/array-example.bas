@@ -1,24 +1,21 @@
 #include once "../inc/collections.bi"
 #include once "../common/person.bi"
 
-/'
-  Usage example for Arrays
-'/
-template( Array, of( Person ) )
+'' Usage example for Arrays
 
-/'
-  Some example predicates and actions
-'/
+template Array, of Person
+
+'' Some example predicates and actions
 #include once "../common/person-predicates.bi"
 #include once "../common/person-actions.bi"
 
-sub showArray( anArray as Array( of( Person ) ) )
+sub showArray( anArray as Array( of Person ) )
   for i as integer = 0 to anArray.count - 1
     ? anArray.at( i ), anArray[ i ]
   next
 end sub
 
-var anArray = Array( of( Person ) )()
+var anArray = Array( of Person )()
 
 with anArray
   .add( Person( "Paul", 37 ) )

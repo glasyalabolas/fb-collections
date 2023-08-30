@@ -1,8 +1,8 @@
 #include once "../inc/collections.bi"
 #include once "../common/person.bi"
 
-template( List, of( Person ) )
-template( Auto_ptr, of( Person ) )
+template( List, of Person )
+template( auto_ptr, of Person )
 
 #include once "../common/person-predicates.bi"
 #include once "../common/person-actions.bi"
@@ -10,12 +10,12 @@ template( Auto_ptr, of( Person ) )
 /'
   Some simple use cases for auto_ptrs
 '/
-function doSomething( aList as List( of( Person ) ) ptr ) as auto_ptr( of( List( of( Person ) ) ) )
+function doSomething( aList as List( of Person ) ptr ) as auto_ptr( of List( of Person ) )
   return( aList->selectAll( PersonsBelowAge( 2 ) ) )
 end function
 
 scope
-  var aList = List( of( Person ) )()
+  var aList = List( of Person )()
   
   with aList
     .add( new Person( "Paul Doe", 1 ) )
@@ -44,7 +44,7 @@ end scope
 '/
 scope
   var _
-    p1 = auto_ptr( of( Person ) )( new Person( "Foo", 3 ) ), _
+    p1 = auto_ptr( of Person )( new Person( "Foo", 3 ) ), _
     p2 = p1
   
   ? p1->name
@@ -74,29 +74,26 @@ end scope
   This is the correct way of doing the above: passing the auto_ptr
   to the function that needs it BYREF. 
 '/
-sub correctWay( byref aPtr as auto_ptr( of( Person ) ) )
+sub correctWay( aPtr as auto_ptr( of Person ) )
   ? *aPtr
 end sub
 
 scope
-  var p1 = auto_ptr( of( Person ) )( new Person( "I will NOT die young", 3 ) )
+  var p1 = auto_ptr( of Person )( new Person( "I will NOT die young", 3 ) )
   
   correctWay( p1 )
   
   ? *p1
 end scope
 
-function changeNameOf( byref aPerson as auto_ptr( of( Person ) ), aNewName as const string ) _
-  byref as auto_ptr( of( Person ) )
-  
+function changeNameOf( aPerson as auto_ptr( of Person ), aNewName as const string ) byref as auto_ptr( of Person )
   ? aPerson->name & " changes its name to " & aNewName
   aPerson->name = aNewName
   
   return( aPerson )
 end function
 
-function changeAgeOf( byref aPerson as auto_ptr( of( Person ) ), aNewAge as integer ) _
-  byref as auto_ptr( of( Person ) )
+function changeAgeOf( aPerson as auto_ptr( of Person ), aNewAge as integer ) byref as auto_ptr( of Person )
   
   ? aPerson->name & " lies about its age: " & aNewAge
   
@@ -111,7 +108,7 @@ end function
   below; so after the function finishes, the auto_ptr will get
   collected.
 '/
-sub dateServiceProfile( byval aPerson as auto_ptr( of( Person ) ) )
+sub dateServiceProfile( byval aPerson as auto_ptr( of Person ) )
   ?
   ? "** MyHotDate user profile **"
   ?

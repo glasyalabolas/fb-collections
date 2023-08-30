@@ -54,38 +54,38 @@ end operator
 /'
   We can now define the key for Point2
 '/
-type Key( of( Point2 ) )
+type Key( of Point2 )
   public:
     declare constructor()
     declare constructor( as const Point2 )
-    declare constructor( as Key( of( Point2 ) ) )
+    declare constructor( as Key( of Point2 ) )
     declare destructor()
     
     declare operator let( as Point2 )
-    declare operator let( as Key( of( Point2 ) ) )
+    declare operator let( as Key( of Point2 ) )
     
     declare function getHashCode() as ulong
     
     as Point2 value
 end type
 
-constructor Key( of( Point2 ) )() : end constructor
+constructor Key( of Point2 )() : end constructor
 
-constructor Key( of( Point2 ) )( aPoint2 as const Point2 )
+constructor Key( of Point2 )( aPoint2 as const Point2 )
   value = aPoint2
 end constructor
 
-constructor Key( of( Point2 ) )( rhs as Key( of( Point2 ) ) )
+constructor Key( of Point2 )( rhs as Key( of Point2 ) )
   value = rhs.value
 end constructor
 
-destructor Key( of( Point2 ) )() : end destructor
+destructor Key( of Point2 )() : end destructor
 
-operator Key( of( Point2 ) ).let( rhs as Point2 )
+operator Key( of Point2 ).let( rhs as Point2 )
   value = rhs
 end operator
 
-operator Key( of( Point2 ) ).let( rhs as Key( of( Point2 ) ) )
+operator Key( of Point2 ).let( rhs as Key( of Point2 ) )
   value = rhs.value
 end operator
 
@@ -93,24 +93,23 @@ end operator
   Note that keys MUST implement BOTH the getHashCode() function AND the
   equality operator to work as such.
 '/
-function Key( of( Point2 ) ).getHashCode() as ulong
+function Key( of Point2 ).getHashCode() as ulong
   return( culng( ( ( value.X * &hbf58476d1ce4e5b9ull + value.Y ) * &h94d049bb133111ebull ) ) )
 end function
 
-operator =( lhs as Key( of( Point2 ) ), rhs as Key( of( Point2 ) ) ) as integer
+operator =( lhs as Key( of Point2 ), rhs as Key( of Point2 ) ) as integer
   return( lhs.value = rhs.value )
 end operator
 
 '' Now we can template the custom collection
-template( LinkedList, of( Person ) )
-template( Dictionary, of( Point2 ), of( LinkedList( of( Person ) ) ) )
+template( LinkedList, of Person )
+template( Dictionary, of Point2, of LinkedList( of Person ) )
 
 /'
   Little helper function to add a key to the dictionary
 '/
 sub addTo( _
-  aDictionary as Dictionary( of( Point2 ), of( LinkedList( of( Person ) ) ) ), _
-  aKey as Point2, aPerson as Person ptr )
+  aDictionary as Dictionary( of Point2, of LinkedList( of Person ) ), aKey as Point2, aPerson as Person ptr )
   
   var aList = aDictionary.find( aKey )
   
@@ -128,7 +127,7 @@ end sub
   at the specified key.
 '/
 sub showAt( _
-  aDictionary as Dictionary( of( Point2 ), of( LinkedList( of( Person ) ) ) ), aKey as Point2 )
+  aDictionary as Dictionary( of Point2, of LinkedList( of Person ) ), aKey as Point2 )
   
   var aList = aDictionary.find( aKey )
   
@@ -150,7 +149,7 @@ end sub
   used as acceleration structures in place of quadtrees (for the 2D case) and
   octrees (for the 3D case).
 '/
-var aSpatialHash = Dictionary( of( Point2 ), of( LinkedList( of( Person ) ) ) )()
+var aSpatialHash = Dictionary( of Point2, of LinkedList( of Person ) )()
 
 addTo( aSpatialHash, Point2( 2, 3 ), new Person( "Paul Doe", 37 ) )
 addTo( aSpatialHash, Point2( 3, 1 ), new Person( "Janet Doe", 31 ) )

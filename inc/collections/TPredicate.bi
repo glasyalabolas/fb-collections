@@ -8,7 +8,7 @@
 #macro template_predicate( TType )
   #ifndef __T__##IPredicate##__##TType
   
-  type Predicate( of( TType ) ) extends Object
+  type Predicate( of TType ) extends Object
     declare virtual destructor()
     
     declare abstract function eval( as TType ptr ) as boolean
@@ -17,8 +17,7 @@
     as integer indexOf
   end type
   
-  destructor Predicate( of( TType ) )() export
-  end destructor
+  destructor Predicate( of TType )() : end destructor
   
   #endif
   

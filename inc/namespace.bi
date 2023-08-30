@@ -3,7 +3,7 @@
 
 '' Framework namespace
 #ifndef __FBFW_NS__
-  #define __FBFW_NS__ fbfw
+  #define __FBFW_NS__ FbFw
 #endif
 
 '' Collections namespace
@@ -13,7 +13,7 @@
 
 '' Math namespace
 #ifndef __FBFW_NS_MATH__
-  #define __FBFW_NS_MATH__ math
+  #define __FBFW_NS_MATH__ Math
 #endif
 
 #endif
